@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: FinMath API
+  version: "1.0.0"
+paths:
+  /v1/api/price:
+    post:
+      summary: Simulador Price
+      responses: { "200": { description: OK } }
+  /v1/api/sac:
+    post:
+      summary: Simulador SAC
+      responses: { "200": { description: OK } }
+  /v1/api/npv-irr:
+    post:
+      summary: NPV/IRR (solver)
+      responses: { "200": { description: OK } }
+  /v1/api/cet/basic:
+    post:
+      summary: CET básico
+      responses: { "200": { description: OK } }
