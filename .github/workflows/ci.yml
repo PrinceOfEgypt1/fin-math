@@ -1,8 +1,18 @@
-name: CI
+name: CI & Pages
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -21,3 +31,26 @@ jobs:
         run: pnpm -F @finmath/engine typecheck
       - name: Tests (engine golden)
         run: pnpm -F @finmath/engine test:golden
+
+  pages:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare static site
+        run: |
+          mkdir -p site
+          cp -r apps/demo/* site/ 2>/dev/null || echo '<h1>fin-math</h1><p>Coloque seu demo em <code>apps/demo/index.html</code>.</p>' > site/index.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
