@@ -6,9 +6,12 @@ export function cetBasic(
   feesT0: Array<number | string> = [],
   baseAnnual = 12,
 ) {
-  const fees = feesT0.reduce((s, v) => s + Number(v), 0);
+  const fees = feesT0.reduce<number>(
+    (s: number, v: number | string) => s + Number(v),
+    0,
+  );
   const cfs = [
-    Number(pv) - fees,
+    Number(pv) - Number(fees),
     ...Array.from({ length: n }, () => -Number(pmt)),
   ];
   const irr = irrBisection(cfs) ?? 0;

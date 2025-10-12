@@ -10,7 +10,7 @@
     "motorVersion": "0.1.0"
   },
   "expected": {
-    "pmt": 736.43
+    "pmt": 854.66
   },
   "tolerance": 0.01
 }

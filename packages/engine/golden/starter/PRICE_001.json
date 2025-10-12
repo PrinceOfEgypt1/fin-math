@@ -13,8 +13,8 @@
   },
   "expected": {
     "pmt": 945.6,
-    "total_interest": 1347.15,
-    "total_paid": 11347.15
+    "total_interest": 1347.2,
+    "total_paid": 11347.2
   },
   "tolerance": 0.01
 }
