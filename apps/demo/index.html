@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulador Price • Protótipo v0.1</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#0f172a; --muted:#94a3b8; --text:#e2e8f0; --accent:#38bdf8; --accent-2:#22d3ee; --ok:#10b981; --warn:#f59e0b; --bad:#ef4444;
+      --border:rgba(148,163,184,.18); --shadow:0 10px 30px rgba(2,6,23,.5);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 600px at 20% -10%, #0ea5e970, transparent),radial-gradient(800px 400px at 120% 10%, #22d3ee40, transparent),var(--bg);color:var(--text);font:400 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial}
+    .app{max-width:1200px;margin:32px auto;padding:0 16px;display:grid;grid-template-columns:360px 1fr;gap:20px}
+    @media (max-width: 980px){.app{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg,rgba(15,23,42,.85),rgba(15,23,42,.8));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .p16{padding:16px} .p20{padding:20px}
+    .title{font-size:18px;font-weight:600;letter-spacing:.2px;margin:0 0 12px}
+    .muted{color:var(--muted)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
+    input,select,button,textarea{width:100%;background:#0b1220;border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:12px;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:#38bdf8aa;box-shadow:0 0 0 3px #38bdf822}
+    button{cursor:pointer;background:linear-gradient(135deg, var(--accent), var(--accent-2));border:none;font-weight:600}
+    .btn-row{display:flex;gap:10px;margin-top:12px}
+    .btn-secondary{background:#0b1220;border:1px solid var(--border)}
+    .small{font-size:12px}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+    .kpi{padding:12px;border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,rgba(2,6,23,.4),rgba(2,6,23,.2))}
+    .kpi h4{margin:0 0 6px;font-size:12px;color:var(--muted)}
+    .kpi .v{font-size:18px;font-weight:700}
+    .schedule{margin-top:14px;overflow:auto;border:1px solid var(--border);border-radius:14px}
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;background:#0e1628;border-bottom:1px solid var(--border);padding:10px;text-align:right;font-weight:600;font-size:12px;color:var(--muted)}
+    thead th:first-child, tbody td:first-child, tbody td:nth-child(2){text-align:center}
+    tbody td{padding:8px 10px;border-bottom:1px solid rgba(148,163,184,.08);text-align:right;font-variant-numeric:tabular-nums}
+    tbody tr:last-child td{border-bottom:none}
+    .expl{margin-top:16px;border:1px dashed var(--border);border-radius:14px;padding:12px}
+    .expl h3{margin:0 0 8px;font-size:16px}
+    .code{background:#0b1220;border:1px solid var(--border);padding:10px;border-radius:10px;overflow:auto}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--muted)}
+    .footer{opacity:.7;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="card p20">
+      <h1 class="title">Simulador Price</h1>
+      <div class="muted small">Protótipo interativo (v0.1). Em produção, cálculos usarão decimal/bigint. Este protótipo aplica arredondamento <b>Half-Up</b> a 2 casas.</div>
+      <label>Valor do empréstimo (R$)</label>
+      <input id="pv" inputmode="decimal" placeholder="10.000,00" value="10.000,00" />
+
+      <div class="row">
+        <div>
+          <label>Taxa mensal (% a.m.)</label>
+          <input id="rate" inputmode="decimal" placeholder="2,50" value="2,50" />
+        </div>
+        <div>
+          <label>Prazo (meses)</label>
+          <input id="n" inputmode="numeric" placeholder="12" value="12" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Data do desembolso</label>
+          <input type="date" id="date0" />
+        </div>
+        <div>
+          <label>1º vencimento</label>
+          <input type="date" id="date1" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Day Count</label>
+          <select id="daycount">
+            <option value="30360">30/360</option>
+            <option value="ACT365">ACT/365</option>
+          </select>
+        </div>
+        <div>
+          <label class="pill" style="justify-content:center;margin-top:28px">
+            <input type="checkbox" id="prorata" style="width:auto" /> Pro rata 1ª parcela
+          </label>
+        </div>
+      </div>
+
+      <label>Tarifas (CET básico • opcionais)</label>
+      <div class="row">
+        <input id="feeName" placeholder="Tarifa de cadastro" />
+        <input id="feeVal" inputmode="decimal" placeholder="85,00" />
+      </div>
+
+      <div class="btn-row">
+        <button id="simulate">Calcular</button>
+        <button id="clear" class="btn-secondary">Limpar</button>
+      </div>
+
+      <div class="btn-row">
+        <button id="csv" class="btn-secondary">Exportar CSV</button>
+        <button id="pdf" class="btn-secondary" title="Protótipo (gera impressão)">PDF (imprimir)</button>
+      </div>
+
+      <div class="footer small muted">Dica: preencha e clique <b>Calcular</b>. Use <b>Exportar CSV</b> para baixar o cronograma.
+      </div>
+    </aside>
+
+    <main class="card p20">
+      <div style="display:flex;align-items:center;gap:10px;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="pill">Arredondamento: Half-Up</span>
+          <span class="pill" id="motorVersion">motorVersion: 0.1.0-proto</span>
+        </div>
+        <div class="muted small" id="calcMeta"></div>
+      </div>
+
+      <section class="kpis">
+        <div class="kpi"><h4>Parcela (PMT)</h4><div class="v" id="k_pmt">—</div></div>
+        <div class="kpi"><h4>Total pago</h4><div class="v" id="k_total">—</div></div>
+        <div class="kpi"><h4>Juros totais</h4><div class="v" id="k_juros">—</div></div>
+        <div class="kpi"><h4>CET básico (a.a.)</h4><div class="v" id="k_cet">—</div></div>
+      </section>
+
+      <section class="schedule" id="scheduleWrap" style="display:none">
+        <table id="scheduleTbl">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Data</th>
+              <th>Parcela</th>
+              <th>Juros</th>
+              <th>Amortização</th>
+              <th>Saldo</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+
+      <section class="expl" id="explain" style="display:none">
+        <h3>Explain Panel — Como calculamos</h3>
+        <div id="ex1"></div>
+        <div class="code" id="ex2"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+  // ======= Utilidades =======
+  const BRL = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
+  const PCT = new Intl.NumberFormat('pt-BR', {style:'percent', minimumFractionDigits:2, maximumFractionDigits:2});
+  const fmt = v => BRL.format(v);
+  function parseMoneyToNumber(str){
+    if(!str) return 0; // "10.000,50" -> 10000.50
+    const s = String(str).replace(/\s/g,'').replace(/\./g,'').replace(/,/g,'.');
+    const n = Number(s);
+    return isFinite(n)? n : 0;
+  }
+  function round2(n){ return Math.round((n + Number.EPSILON) * 100) / 100 }
+  function addMonths(d, m){ const x = new Date(d.getTime()); x.setMonth(x.getMonth()+m); return x }
+  function fmtDate(d){ return d.toISOString().slice(0,10) }
+
+  // NPV com taxa i (mensal). CF[0] no tempo 0.
+  function npv(rate, cfs){
+    let s = 0; for(let t=0; t<cfs.length; t++){ s += cfs[t] / Math.pow(1+rate, t); } return s;
+  }
+  // IRR via bissecção (para CF padrão: + no t0, - nos demais). Retorna null se não houver mudança de sinal.
+  function irrBisection(cfs, lo=0, hi=1){
+    const f = r => npv(r, cfs);
+    let f0 = f(lo), f1 = f(hi);
+    if (isNaN(f0) || isNaN(f1)) return null;
+    // Tentar expandir hi até mudar o sinal (limite prático 1000% a.m.)
+    let tries = 0; while(f0*f1>0 && hi<10 && tries<20){ hi*=1.5; f1=f(hi); tries++; }
+    if (f0*f1>0) return null;
+    for(let k=0;k<80;k++){ // precisão suficiente
+      const mid = (lo+hi)/2, fm = f(mid);
+      if (Math.abs(fm) < 1e-8) return mid;
+      if (f0*fm<0){ hi=mid; f1=fm; } else { lo=mid; f0=fm; }
+    }
+    return (lo+hi)/2;
+  }
+
+  // ======= Price =======
+  function pmtPrice(pv, i, n){
+    if (i===0) return pv / n;
+    const a = Math.pow(1+i, n);
+    return pv * (i*a)/(a-1);
+  }
+
+  function buildSchedule({pv, i, n, date0, date1, daycount, prorata, fees}){
+    const start = new Date(date0); const first = new Date(date1);
+    const schedule = [];
+    let balance = pv; // em reais (Number) — protótipo
+    const pmt = round2(pmtPrice(pv, i, n));
+
+    // Pro rata simples da 1ª parcela (opcional)
+    let firstFactor = 1; let daysInfo = '';
+    if (prorata){
+      const days = (first - start)/(1000*60*60*24);
+      if (daycount==='30360'){
+        // aproximar por 30/360
+        const d = Math.min(30, Math.max(0, days));
+        firstFactor = d/30;
+        daysInfo = `Pro rata 1ª parcela: ${d.toFixed(0)}d/30`;
+      } else {
+        const d = Math.max(0, days);
+        firstFactor = d/365;
+        daysInfo = `Pro rata 1ª parcela: ${d.toFixed(0)}d/365`;
+      }
+    }
+
+    for(let k=1;k<=n;k++){
+      const due = k===1? first : addMonths(first, k-1);
+      // Juros do período
+      let factor = 1; if (k===1) factor = firstFactor;
+      const juros = round2(balance * i * factor);
+      // Amortização base
+      let amort = round2(pmt - juros);
+      // Ajuste da última parcela (resíduo)
+      if (k===n){ amort = round2(balance); }
+      const newBal = round2(balance - amort);
+      schedule.push({k, due: fmtDate(due), parcela:pmt, juros, amort, saldo:newBal});
+      balance = newBal;
+    }
+
+    // CET básico (tarifas) — tarifas como saída de caixa no t0
+    const totalFees = fees.filter(f=>f.v>0).reduce((s,f)=>s+f.v,0);
+    const cfs = [pv - totalFees, ...Array(n).fill(-pmt)];
+    const irr = irrBisection(cfs);
+    const cetMonthly = irr!=null? irr : 0;
+    const cetAnnual = Math.pow(1+cetMonthly,12)-1;
+
+    return {pmt, schedule, cetAnnual, cetMonthly, meta: daysInfo};
+  }
+
+  // ======= UI =======
+  function setTodayDefaults(){
+    const now = new Date(); const y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+    const plus = new Date(now); plus.setMonth(plus.getMonth()+1);
+    document.getElementById('date0').value = `${y}-${m}-${d}`;
+    document.getElementById('date1').value = fmtDate(plus);
+  }
+
+  function readFees(){
+    const name = (document.getElementById('feeName').value||'').trim();
+    const v = parseMoneyToNumber(document.getElementById('feeVal').value||'0');
+    return name && v>0 ? [{name, v: round2(v)}] : [];
+  }
+
+  function simulate(){
+    // Entradas
+    const pv = round2(parseMoneyToNumber(document.getElementById('pv').value));
+    const rate = Number(String(document.getElementById('rate').value).replace(',','.'))/100; // % a.m. → fração
+    const n = Math.max(1, parseInt(document.getElementById('n').value||'1',10));
+    const date0 = document.getElementById('date0').value;
+    const date1 = document.getElementById('date1').value;
+    const daycount = document.getElementById('daycount').value;
+    const prorata = document.getElementById('prorata').checked;
+    const fees = readFees();
+
+    if (!(pv>0 && rate>=0 && n>0 && date0 && date1)){
+      alert('Preencha valor, taxa, prazo e datas.');
+      return;
+    }
+
+    const t0 = performance.now();
+    const out = buildSchedule({pv, i:rate, n, date0, date1, daycount, prorata, fees});
+    const t1 = performance.now();
+
+    // KPIs
+    const total = round2(out.schedule.reduce((s,r)=>s+r.parcela,0));
+    const jurosTot = round2(total - pv);
+    document.getElementById('k_pmt').textContent = fmt(out.pmt);
+    document.getElementById('k_total').textContent = fmt(total);
+    document.getElementById('k_juros').textContent = fmt(jurosTot);
+    document.getElementById('k_cet').textContent = isFinite(out.cetAnnual)? PCT.format(out.cetAnnual): '—';
+
+    // Tabela
+    const tb = document.getElementById('tbody'); tb.innerHTML='';
+    for(const r of out.schedule){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.k}</td><td>${r.due}</td><td>${fmt(r.parcela)}</td><td>${fmt(r.juros)}</td><td>${fmt(r.amort)}</td><td>${fmt(r.saldo)}</td>`;
+      tb.appendChild(tr);
+    }
+    document.getElementById('scheduleWrap').style.display = '';
+
+    // Explain
+    const ex1 = document.getElementById('ex1');
+    ex1.innerHTML = `
+      <div class="row">
+        <div>
+          <div class="pill">Fórmula da parcela (Price)</div>
+          <div class="small muted" style="margin-top:8px">PMT = PV · \u007Bi(1+i)^n\u007D / \u007B(1+i)^n − 1\u007D</div>
+        </div>
+        <div>
+          <div class="pill">Valores utilizados</div>
+          <div class="small" style="margin-top:8px">PV=${fmt(pv)}, i=${PCT.format(rate)}, n=${n}</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="small">(1+i)^n = ${(Math.pow(1+rate,n)).toFixed(8)}</div>
+        <div class="small">PMT ≈ ${fmt(out.pmt)}</div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="pill">Mês 1 — Juros = Saldo×i${out.meta?` • ${out.meta}`:''}</div>
+        <div class="small">Juros₁ = ${fmt(pv)} × ${PCT.format(rate)} = ${fmt(out.schedule[0].juros)}</div>
+      </div>
+    `;
+
+    const ex2 = document.getElementById('ex2');
+    ex2.textContent = `Entrada
+  PV = ${fmt(pv)}\n  i  = ${PCT.format(rate)} a.m.\n  n  = ${n} meses\n  daycount=${daycount} proRata=${prorata}\n  tarifas=${fees.map(f=>`${f.name}:${fmt(f.v)}`).join(', ')||'—'}\n\nParcela (PMT)\n  pmt = ${fmt(out.pmt)}\n\nCronograma (1ª linha)\n  juros₁ = PV × i × fator = ${fmt(out.schedule[0].juros)}\n  amort₁ = pmt − juros₁ = ${fmt(out.schedule[0].amort)}\n  saldo₁ = PV − amort₁ = ${fmt(out.schedule[0].saldo)}\n\nCET básico (tarifas, sem IOF)\n  IRR mensal ≈ ${PCT.format(out.cetMonthly)}\n  CET anual (efetivo) ≈ ${PCT.format(out.cetAnnual)}\n  Método: bissecção (protótipo)`;
+
+    document.getElementById('explain').style.display = '';
+    document.getElementById('calcMeta').textContent = `Tempo: ${(t1-t0).toFixed(1)} ms`;
+  }
+
+  function toCSV(){
+    const rows = [['#','Data','Parcela','Juros','Amortizacao','Saldo']];
+    const tb = document.getElementById('tbody');
+    if(!tb || !tb.children.length){ alert('Calcule primeiro.'); return; }
+    for(const tr of tb.children){
+      const tds = [...tr.children].map(td=>td.textContent.replace(/[R$\s]/g,'').replace('.', '').replace(',', '.'));
+      rows.push(tds);
+    }
+    const csv = rows.map(r=>r.join(';')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='cronograma_price.csv'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  function clearAll(){
+    document.getElementById('pv').value='';
+    document.getElementById('rate').value='';
+    document.getElementById('n').value='';
+    document.getElementById('feeName').value='';
+    document.getElementById('feeVal').value='';
+    document.getElementById('scheduleWrap').style.display='none';
+    document.getElementById('explain').style.display='none';
+    document.getElementById('k_pmt').textContent='—';
+    document.getElementById('k_total').textContent='—';
+    document.getElementById('k_juros').textContent='—';
+    document.getElementById('k_cet').textContent='—';
+  }
+
+  // Init
+  setTodayDefaults();
+  document.getElementById('simulate').addEventListener('click', simulate);
+  document.getElementById('csv').addEventListener('click', toCSV);
+  document.getElementById('clear').addEventListener('click', clearAll);
+  document.getElementById('pdf').addEventListener('click', ()=>window.print());
+  </script>
+</body>
+</html>
