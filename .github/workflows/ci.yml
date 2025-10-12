@@ -2,7 +2,7 @@ name: CI & Pages
 
 on:
   push:
-    branches: [main]
+    branches: ["**"]
   pull_request:
 
 permissions:
