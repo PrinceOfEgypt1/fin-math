@@ -1,9 +1,7 @@
-node_modules
-dist
-coverage
+node_modules/
+.pnpm-store/
+dist/
+build/
+coverage/
 *.log
-.env
-*.local
-pnpm-lock.yaml
-.vscode
-.DS_Store
+.env*
