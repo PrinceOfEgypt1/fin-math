@@ -1,0 +1,20 @@
+{
+  "test_id": "PRICE_005",
+  "stage": "S2",
+  "description": "R$ 15000.00, 18x, 2.2500% a.m. — Price",
+  "inputs": {
+    "pv": "15000.00",
+    "rateMonthly": "0.0225",
+    "n": 18,
+    "date0": "2025-01-10",
+    "date1": "2025-02-10",
+    "daycount": "30360",
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "pmt": 1022.66,
+    "total_interest": 3407.82,
+    "total_paid": 18407.82
+  },
+  "tolerance": 0.01
+}

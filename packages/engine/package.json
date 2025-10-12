@@ -8,17 +8,18 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:golden": "vitest run test/golden.spec.ts"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "decimal.js": "^10.4.3",
-    "zod": "^3.23.8",
-    "date-fns": "^4.1.0"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "fast-check": "^3.18.0",
-    "vitest": "^1.6.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^1.6.0"
   }
 }

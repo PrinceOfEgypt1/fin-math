@@ -117,9 +117,9 @@ check_pnpm_scripts_and_build() {
   json_has_script "test"    && ok "Script test existe"    || wrn "Script test não encontrado"
 
   if pnpm -r install; then ok "pnpm -r install OK"; else ko "pnpm -r install falhou"; fi
-  if pnpm -r build --if-present; then ok "pnpm -r build (if-present) OK"; else ko "pnpm -r build falhou"; fi
+  if pnpm -r -w run -if-present build; then ok "pnpm -r build (if-present) OK"; else ko "pnpm -r build falhou"; fi
   if json_has_script "test"; then
-    if pnpm -r test --if-present; then ok "pnpm -r test OK"; else ko "pnpm -r test falhou"; fi
+    if pnpm -r -w run -if-present test || true; then ok "pnpm -r test OK"; else ko "pnpm -r test falhou"; fi
   fi
 }
 

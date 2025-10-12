@@ -1,0 +1,13 @@
+{
+  "test_id": "EQ_001",
+  "stage": "S1",
+  "description": "EQ_001",
+  "inputs": {
+    "rate_m": "0.025",
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "rate_a": 0.344889
+  },
+  "tolerance": 0.01
+}

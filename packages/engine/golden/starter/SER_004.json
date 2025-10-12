@@ -1,0 +1,16 @@
+{
+  "test_id": "SER_004",
+  "stage": "S1",
+  "description": "SER_004",
+  "inputs": {
+    "pv": "8000.00",
+    "i_m": "0.015",
+    "n": 10,
+    "kind": "ant",
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "pmt": 736.43
+  },
+  "tolerance": 0.01
+}

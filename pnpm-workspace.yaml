@@ -4,3 +4,6 @@ packages:
   - engine
   - api
   - ui
+
+onlyBuiltDependencies:
+  - esbuild

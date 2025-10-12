@@ -1,0 +1,29 @@
+{
+  "test_id": "NPVIRR_001",
+  "stage": "S3",
+  "description": "IRR de fluxo padrão (12 parcelas)",
+  "inputs": {
+    "cashflows": [
+      "10000.00",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56",
+      "-946.56"
+    ],
+    "baseAnnual": 12,
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "irrMonthly": 0.020166,
+    "cetAnnual": 0.27072
+  },
+  "tolerance": 0.0001
+}
