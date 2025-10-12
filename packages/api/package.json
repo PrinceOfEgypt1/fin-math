@@ -12,7 +12,7 @@
     "test:integration": "vitest run test/integration"
   },
   "dependencies": {
-    "@fastify/cors": "^10.1.0",
+    "@fastify/cors": "^8.5.0",
     "@finmath/engine": "workspace:*",
     "date-fns": "^4.1.0",
     "decimal.js": "^10.6.0",

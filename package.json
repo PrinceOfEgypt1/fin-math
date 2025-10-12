@@ -9,12 +9,14 @@
   "scripts": {
     "build": "pnpm -r --filter ./packages... run build",
     "dev:api": "pnpm --filter @finmath/api run dev",
-    "dev:ui": "pnpm --filter @finmath/ui run dev",
-    "test": "vitest run",
+    "dev:ui": "pnpm -F @finmath/ui dev",
+    "test": "pnpm -F @finmath/engine test:golden",
     "lint": "pnpm -r --filter ./packages... lint",
-    "typecheck": "pnpm -r --filter ./packages... run typecheck",
+    "typecheck": "pnpm -F @finmath/engine typecheck",
     "prepare": "husky",
-    "test:golden": "vitest run test/golden.spec.ts"
+    "test:golden": "vitest run test/golden.spec.ts",
+    "dev": "pnpm run dev:ui",
+    "dev:demo": "python3 -m http.server 8080 -d apps/demo"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
