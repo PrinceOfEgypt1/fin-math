@@ -1,8 +1,28 @@
-export * as interest from "./modules/interest";
-export * as rate from "./modules/rate";
-export * as series from "./modules/series";
-export * as amortization from "./modules/amortization";
-export * as irr from "./modules/irr";
-export * as cet from "./modules/cet";
-export * as daycount from "./modules/daycount";
-export { round2 } from "./util/round";
+/**
+ * @finmath/engine
+ * Financial mathematics calculation engine
+ */
+
+import * as interestModule from "./modules/interest";
+import * as rateModule from "./modules/rate";
+import * as seriesModule from "./modules/series";
+import * as amortizationModule from "./modules/amortization";
+import * as irrModule from "./modules/irr";
+import * as cetModule from "./modules/cet";
+
+// Export as namespaces (for backward compatibility with tests)
+export const interest = interestModule;
+export const rate = rateModule;
+export const series = seriesModule;
+export const amortization = amortizationModule;
+export const irr = irrModule;
+export const cet = cetModule;
+
+// Export utilities
+export * from "./util/round";
+
+// NEW: Day count conventions (ONDA 1) - direct exports
+export * from "./day-count";
+
+// Version
+export const ENGINE_VERSION = "0.3.0";

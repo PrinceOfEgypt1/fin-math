@@ -102,7 +102,7 @@ export function formatZodError(
 }
 
 export function errorHandler(
-  error: Error,
+  error: Error & { statusCode?: number; validation?: any },
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -112,6 +112,19 @@ export function errorHandler(
     "Request error",
   );
 
+  // Handle Fastify validation errors (schema validation)
+  if (error.validation) {
+    const envelope: ErrorEnvelope = {
+      error: {
+        code: ErrorCode.VALIDATION_ERROR,
+        message: error.message,
+        correlationId,
+      },
+    };
+    return reply.status(400).send(envelope);
+  }
+
+  // Handle Zod validation errors
   if (error instanceof ZodError) {
     const validationError = formatZodError(error, correlationId);
     return reply
@@ -119,6 +132,7 @@ export function errorHandler(
       .send(validationError.toEnvelope());
   }
 
+  // Handle custom AppError
   if (error instanceof AppError) {
     return reply.status(error.statusCode).send({
       ...error.toEnvelope(),
@@ -126,6 +140,7 @@ export function errorHandler(
     });
   }
 
+  // Handle generic errors
   const envelope: ErrorEnvelope = {
     error: {
       code: ErrorCode.INTERNAL_ERROR,

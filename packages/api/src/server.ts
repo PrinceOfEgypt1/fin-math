@@ -3,133 +3,86 @@ import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
-import { logger, MOTOR_VERSION } from "./infrastructure/logger.js";
-import { errorHandler } from "./infrastructure/errors.js";
+import { randomUUID } from "crypto";
+import { errorHandler } from "./infrastructure/errors";
+import { dayCountRoutes } from "./routes/day-count.routes";
+import { ENGINE_VERSION } from "@finmath/engine";
 
-export async function createServer() {
-  const server = Fastify({
-    logger: logger as any,
-    requestIdLogLabel: "correlationId",
-    disableRequestLogging: false,
-    genReqId: () => crypto.randomUUID(),
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3001;
+
+async function buildServer() {
+  const fastify = Fastify({
+    logger: true,
+    genReqId: () => randomUUID(),
   });
 
-  await server.register(cors, {
-    origin: process.env.CORS_ORIGIN || "*",
-    credentials: true,
-  });
+  await fastify.register(helmet);
+  await fastify.register(cors);
 
-  await server.register(helmet, {
-    contentSecurityPolicy: false,
-  });
-
-  await server.register(swagger, {
+  await fastify.register(swagger, {
     openapi: {
-      openapi: "3.1.0",
       info: {
         title: "FinMath API",
-        description: "API REST para cálculos de matemática financeira",
-        version: MOTOR_VERSION,
-        contact: {
-          name: "FinMath Team",
-          url: "https://github.com/PrinceOfEgypt1/fin-math",
-        },
+        version: ENGINE_VERSION,
+        description: "Financial mathematics calculation API",
       },
       tags: [
         { name: "health", description: "Health check" },
-        { name: "price", description: "Price calculations" },
-        { name: "sac", description: "SAC calculations" },
-        { name: "cet", description: "CET calculations" },
+        { name: "day-count", description: "Day count conventions" },
       ],
     },
   });
 
-  await server.register(swaggerUi, {
+  await fastify.register(swaggerUi, {
     routePrefix: "/api-docs",
-    uiConfig: { docExpansion: "list", deepLinking: true },
   });
 
-  server.setErrorHandler(errorHandler);
+  fastify.setErrorHandler(errorHandler as any);
 
-  server.addHook("onSend", async (request, reply, payload) => {
-    if (reply.statusCode >= 200 && reply.statusCode < 300) {
-      const contentType = reply.getHeader("content-type");
-      if (contentType && contentType.toString().includes("application/json")) {
-        try {
-          const json = JSON.parse(payload as string);
-          if (!json.meta) json.meta = {};
-          json.meta.motorVersion = MOTOR_VERSION;
-          json.meta.calculationId = json.meta.calculationId || request.id;
-          json.meta.timestamp = new Date().toISOString();
-          return JSON.stringify(json);
-        } catch {
-          return payload;
-        }
-      }
-    }
-    return payload;
-  });
-
-  server.get(
-    "/health",
-    {
-      schema: {
-        description: "Health check",
-        tags: ["health"],
-        response: {
-          200: {
-            type: "object",
-            properties: {
-              status: { type: "string" },
-              timestamp: { type: "string" },
-              motorVersion: { type: "string" },
-              uptime: { type: "number" },
-            },
+  fastify.get("/health", {
+    schema: {
+      description: "Health check endpoint",
+      tags: ["health"],
+      response: {
+        200: {
+          type: "object",
+          properties: {
+            status: { type: "string" },
+            motorVersion: { type: "string" },
+            timestamp: { type: "string" },
           },
         },
       },
     },
-    async () => ({
-      status: "ok",
-      timestamp: new Date().toISOString(),
-      motorVersion: MOTOR_VERSION,
-      uptime: process.uptime(),
-    }),
-  );
-
-  server.get("/", async (request, reply) => reply.redirect("/api-docs"));
-
-  server.setNotFoundHandler((request, reply) => {
-    reply.status(404).send({
-      error: {
-        code: "ENDPOINT_NOT_FOUND",
-        message: `Route ${request.method}:${request.url} not found`,
-        correlationId: request.id,
-      },
-    });
+    handler: async (request, reply) => {
+      return reply.status(200).send({
+        status: "healthy",
+        motorVersion: ENGINE_VERSION,
+        timestamp: new Date().toISOString(),
+      });
+    },
   });
 
-  return server;
+  await fastify.register(dayCountRoutes, { prefix: "/api" });
+
+  return fastify;
 }
 
-export async function startServer() {
-  const server = await createServer();
-  const port = parseInt(process.env.PORT || "3001", 10);
-  const host = process.env.HOST || "0.0.0.0";
+async function start() {
+  const server = await buildServer();
 
   try {
-    await server.listen({ port, host });
-    logger.info(
-      { port, host, motorVersion: MOTOR_VERSION },
-      `🚀 Server running on http://${host}:${port}`,
-    );
-    logger.info(`📚 API Docs: http://${host}:${port}/api-docs`);
+    await server.listen({ port: PORT, host: "0.0.0.0" });
+    server.log.info(`Server listening on port ${PORT}`);
+    server.log.info(`Swagger UI: http://localhost:${PORT}/api-docs`);
   } catch (err) {
-    logger.error(err, "Failed to start server");
+    server.log.error(err);
     process.exit(1);
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  startServer();
+if (require.main === module) {
+  start();
 }
+
+export { buildServer };
