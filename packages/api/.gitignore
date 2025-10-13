@@ -1,0 +1,28 @@
+# Build
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+
+# Environment
+.env*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# PROIBIDO: Backups (REGRA CRÍTICA #3)
+*.bak
+*.backup
+*.save
+*~
