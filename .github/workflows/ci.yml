@@ -1,11 +1,11 @@
-name: CI & Pages
+name: CI
 on:
   push:
-    branches: ["**"]
+    branches: ['**']
   pull_request:
 
 jobs:
-  test:
+  engine:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,12 +20,11 @@ jobs:
           version: 9
           run_install: true
 
-      - run: pnpm -w test
+      - name: Typecheck (engine)
+        run: pnpm -F @finmath/engine typecheck
 
-  # Publicação opcional (só roda se os testes passarem)
-  pages:
-    needs: test
-    if: ${{ success() }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Publicar demo aqui, se aplicável"
+      - name: Testes (engine)
+        run: pnpm -F @finmath/engine test
+
+      - name: Golden (engine)
+        run: pnpm -F @finmath/engine test:golden
