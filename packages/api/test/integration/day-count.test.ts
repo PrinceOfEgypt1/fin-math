@@ -32,7 +32,7 @@ describe("Day Count API Integration", () => {
 
       const body = JSON.parse(response.body);
       expect(body.calculationId).toBeDefined();
-      expect(body.motorVersion).toBe("0.3.0");
+      expect(body.motorVersion).toBe("0.4.0");
       expect(body.result.interest).toBeCloseTo(986.3, 2);
       expect(body.result.days).toBe(31);
       expect(body.result.convention).toBe("30/360");

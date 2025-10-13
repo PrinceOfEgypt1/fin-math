@@ -7,6 +7,7 @@ import { randomUUID } from "crypto";
 import { errorHandler } from "./infrastructure/errors";
 import { dayCountRoutes } from "./routes/day-count.routes";
 import { ENGINE_VERSION } from "@finmath/engine";
+import { priceRoutes } from "./routes/price.routes";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 
@@ -64,6 +65,7 @@ async function buildServer() {
   });
 
   await fastify.register(dayCountRoutes, { prefix: "/api" });
+  await fastify.register(priceRoutes, { prefix: "/api" });
 
   return fastify;
 }
