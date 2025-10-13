@@ -1,0 +1,21 @@
+{
+  "id": "DAYCOUNT_003",
+  "description": "Pro-rata interest with ACT/360 convention",
+  "motorVersion": "0.3.0",
+  "input": {
+    "principal": "50000.00",
+    "annualRate": "0.10",
+    "startDate": "2025-01-01",
+    "endDate": "2025-07-01",
+    "convention": "ACT/360"
+  },
+  "expected": {
+    "interest": "2513.89",
+    "yearFraction": "0.502777777777777778",
+    "days": 181,
+    "convention": "ACT/360"
+  },
+  "tolerance": {
+    "interest": 0.01
+  }
+}

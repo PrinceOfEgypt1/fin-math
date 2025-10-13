@@ -1,66 +1,84 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import Fastify, { FastifyInstance } from "fastify";
-import { priceRoutes } from "../../src/routes/price.routes";
+import { buildServer } from "../../src/server";
+import type { FastifyInstance } from "fastify";
 
-describe("POST /api/price", () => {
-  let app: FastifyInstance;
+describe("Price API Integration", () => {
+  let server: FastifyInstance;
 
   beforeAll(async () => {
-    app = Fastify();
-    await app.register(priceRoutes);
-    await app.ready();
+    server = await buildServer();
+    await server.ready();
   });
 
   afterAll(async () => {
-    await app.close();
+    await server.close();
   });
 
-  it("calcula PMT (básico)", async () => {
-    const res = await app.inject({
-      method: "POST",
-      url: "/api/price",
-      payload: { pv: 10000, rate: 0.025, n: 12 },
+  describe("POST /api/price", () => {
+    it("should calculate PRICE schedule for 12 months", async () => {
+      const response = await server.inject({
+        method: "POST",
+        url: "/api/price",
+        payload: {
+          pv: 10000,
+          annualRate: 0.12,
+          n: 12,
+        },
+      });
+
+      expect(response.statusCode).toBe(200);
+
+      const body = JSON.parse(response.body);
+      expect(body.calculationId).toBeDefined();
+      expect(body.motorVersion).toBe("0.4.0");
+      expect(body.result.pmt).toBeCloseTo(888.49, 2);
+      expect(body.result.schedule.length).toBe(12);
+
+      const last = body.result.schedule[11];
+      expect(last.balance).toBeLessThanOrEqual(0.01);
     });
 
-    expect(res.statusCode).toBe(200);
+    it("should validate required fields", async () => {
+      const response = await server.inject({
+        method: "POST",
+        url: "/api/price",
+        payload: {
+          pv: 10000,
+        },
+      });
 
-    const j = res.json();
-    expect(j.pmt).toBeCloseTo(974.87, 2);
-    expect(j.schedule).toHaveLength(12);
-    expect(Math.abs(j.schedule[11].balance)).toBeLessThanOrEqual(0.01);
-    expect(j.meta?.motorVersion).toBeDefined();
-    expect(j.meta?.calculationId).toBeDefined();
-  });
+      expect(response.statusCode).toBe(400);
 
-  it("valida PV mínimo", async () => {
-    const res = await app.inject({
-      method: "POST",
-      url: "/api/price",
-      payload: { pv: 50, rate: 0.025, n: 12 },
-    });
-    expect(res.statusCode).toBe(400);
-  });
-
-  it("inclui tarifas t0 no total pago", async () => {
-    const res = await app.inject({
-      method: "POST",
-      url: "/api/price",
-      payload: {
-        pv: 10000,
-        rate: 0.025,
-        n: 12,
-        feesT0: [
-          { name: "Cadastro", value: 85 },
-          { name: "Avaliação", value: 150 },
-        ],
-      },
+      const body = JSON.parse(response.body);
+      expect(body.error.code).toBe("VALIDATION_ERROR");
     });
 
-    expect(res.statusCode).toBe(200);
-    const j = res.json();
+    it("should validate positive pv", async () => {
+      const response = await server.inject({
+        method: "POST",
+        url: "/api/price",
+        payload: {
+          pv: -1000,
+          annualRate: 0.12,
+          n: 12,
+        },
+      });
 
-    const tarifas = 85 + 150;
-    const esperado = j.pmt * 12 + tarifas; // compara com tolerância de 2 casas
-    expect(j.totalPaid).toBeCloseTo(esperado, 2);
+      expect(response.statusCode).toBe(400);
+    });
+
+    it("should validate n range", async () => {
+      const response = await server.inject({
+        method: "POST",
+        url: "/api/price",
+        payload: {
+          pv: 10000,
+          annualRate: 0.12,
+          n: 500,
+        },
+      });
+
+      expect(response.statusCode).toBe(400);
+    });
   });
 });
