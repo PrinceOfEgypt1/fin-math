@@ -1,9 +1,2 @@
 packages:
-  - apps/*
   - packages/*
-  - engine
-  - api
-  - ui
-
-onlyBuiltDependencies:
-  - esbuild
