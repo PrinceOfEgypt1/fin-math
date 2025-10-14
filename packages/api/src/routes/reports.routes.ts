@@ -16,7 +16,8 @@ function toCSV(rows: any[], totals: any, meta: any) {
 }
 
 export async function reportsRoutes(app: FastifyInstance) {
-  app.post("/api/reports/price.csv", async (req, reply) => {
+  app.post("/reports/price.csv", async (req, reply) => {
+    // ✅ Sem /api
     const res = await app.inject({
       method: "POST",
       url: "/api/price",
@@ -35,7 +36,8 @@ export async function reportsRoutes(app: FastifyInstance) {
     return reply.send(csv);
   });
 
-  app.post("/api/reports/sac.csv", async (req, reply) => {
+  app.post("/reports/sac.csv", async (req, reply) => {
+    // ✅ Sem /api
     const res = await app.inject({
       method: "POST",
       url: "/api/sac",
