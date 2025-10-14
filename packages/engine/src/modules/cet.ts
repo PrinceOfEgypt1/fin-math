@@ -1,4 +1,4 @@
-import { irrBisection } from "./irr";
+import { irrBisection } from "./irr.js";
 export function cetBasic(
   pv: number | string,
   pmt: number | string,

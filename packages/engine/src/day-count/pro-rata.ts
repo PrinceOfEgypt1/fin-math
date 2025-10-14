@@ -1,6 +1,6 @@
 import { Decimal } from "decimal.js";
-import { round2 } from "../util/round";
-import { yearFraction, type DayCountConvention } from "./conventions";
+import { round2 } from "../util/round.js";
+import { yearFraction, type DayCountConvention } from "./conventions.js";
 
 /**
  * Input for pro-rata interest calculation

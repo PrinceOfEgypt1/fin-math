@@ -1,4 +1,4 @@
-import { d, round2 } from "../util/round";
+import { d, round2 } from "../util/round.js";
 
 /**
  * Calcula o pagamento (PMT) de uma série uniforme

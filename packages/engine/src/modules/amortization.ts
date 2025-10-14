@@ -1,5 +1,5 @@
-import { d, round2 } from "../util/round";
-import { pmt as pmtSeries } from "./series";
+import { d, round2 } from "../util/round.js";
+import { pmt as pmtSeries } from "./series.js";
 
 export function price(pv: string | number, i: string | number, n: number) {
   const PMT = round2(pmtSeries(pv, i, n)).toNumber();

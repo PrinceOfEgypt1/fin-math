@@ -8,4 +8,4 @@ export {
   type PriceInput,
   type PriceScheduleRow,
   type PriceResult,
-} from "./price";
+} from "./price.js";

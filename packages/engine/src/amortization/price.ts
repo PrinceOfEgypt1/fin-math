@@ -1,5 +1,5 @@
 import { Decimal } from "decimal.js";
-import { round2 } from "../util/round";
+import { round2 } from "../util/round.js";
 
 /**
  * Input for PRICE calculation

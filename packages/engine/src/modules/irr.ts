@@ -1,4 +1,4 @@
-import { d } from "../util/round";
+import { d } from "../util/round.js";
 export function npv(r: number | string, cfs: Array<string | number>) {
   const R = d(r);
   return cfs.reduce((s, cf, t) => s.plus(d(cf).div(d(1).add(R).pow(t))), d(0));

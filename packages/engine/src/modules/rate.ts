@@ -1,4 +1,4 @@
-import { d } from "../util/round";
+import { d } from "../util/round.js";
 export const monthlyToAnnual = (im: string | number) =>
   d(1).add(d(im)).pow(12).minus(1);
 export const annualToMonthly = (ia: string | number) =>
