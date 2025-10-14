@@ -16,7 +16,8 @@
     "prepare": "husky",
     "test:golden": "vitest run test/golden.spec.ts",
     "dev": "pnpm run dev:ui",
-    "dev:demo": "python3 -m http.server 8080 -d apps/demo"
+    "dev:demo": "python3 -m http.server 8080 -d apps/demo",
+    "pretest": "pnpm -F @finmath/engine build"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
@@ -38,5 +39,6 @@
     "**/*.{ts,tsx,js,jsx,json,md,css}": [
       "prettier --write"
     ]
-  }
+  },
+  "type": "module"
 }

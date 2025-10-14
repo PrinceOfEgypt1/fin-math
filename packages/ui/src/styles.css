@@ -1,9 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  color-scheme: dark;
+
+/* ---- Regra global: sem rolagem ----- */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
+
 body {
   @apply bg-slate-900 text-slate-100;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Layout 100vh: header (64px) + conteúdo */
+#app-root {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 64px 1fr;
+}
+
+.app-header {
+  @apply bg-slate-950 border-b border-slate-800 flex items-center px-4;
+}
+
+/* Conteúdo duas colunas (form | painel lateral) — sem rolagem */
+.page {
+  height: calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Em telas menores: uma coluna, ainda sem rolagem (use abas/wizard) */
+@media (max-width: 1024px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
 }
