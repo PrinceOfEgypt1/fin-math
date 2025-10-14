@@ -26,3 +26,4 @@ coverage/
 *.backup
 *.save
 *~
+.backup-*
