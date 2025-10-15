@@ -7,6 +7,7 @@ import { errorHandler } from "./infrastructure/error-handler";
 import { dayCountRoutes } from "./routes/day-count.routes";
 import { priceRoutes } from "./routes/price.routes";
 import { sacRoutes } from "./routes/sac.routes"; // ✅ ADICIONADO
+import { cetRoutes } from "./routes/cet.routes";
 
 export async function buildServer() {
   const fastify = Fastify({
@@ -45,6 +46,7 @@ export async function buildServer() {
   await fastify.register(dayCountRoutes, { prefix: "/api" });
   await fastify.register(priceRoutes, { prefix: "/api" });
   await fastify.register(sacRoutes, { prefix: "/api" }); // ✅ ADICIONADO
+  await fastify.register(cetRoutes, { prefix: "/api" });
 
   fastify.setErrorHandler(errorHandler);
 
