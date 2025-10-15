@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 *.backup
+
+# Board Management Tools (administrative scripts)
+tools/board-management/*.sh
+tools/board-management/*.txt
+tools/board-management/.finmath*
+tools/board-management/RELATORIO-*.md
