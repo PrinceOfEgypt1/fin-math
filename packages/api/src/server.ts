@@ -1,61 +1,137 @@
-import Fastify from "fastify";
+// packages/api/src/server.ts
+import Fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import swagger from "@fastify/swagger";
-import swaggerUI from "@fastify/swagger-ui";
-import { requestIdPlugin } from "./infrastructure/request-id";
-import { errorHandler } from "./infrastructure/error-handler";
-import { dayCountRoutes } from "./routes/day-count.routes";
+import swaggerUi from "@fastify/swagger-ui";
 import { priceRoutes } from "./routes/price.routes";
-import { sacRoutes } from "./routes/sac.routes"; // ✅ ADICIONADO
+import { sacRoutes } from "./routes/sac.routes";
+import { cetRoutes } from "./routes/cet.routes";
+import { snapshotRoutes } from "./routes/snapshot.routes";
+import { validatorRoutes } from "./routes/validator.routes";
 
-export async function buildServer() {
+export async function build(): Promise<FastifyInstance> {
   const fastify = Fastify({
     logger: {
       level: process.env.LOG_LEVEL || "info",
     },
-    genReqId: () => crypto.randomUUID(),
   });
 
+  // CORS
   await fastify.register(cors, {
-    origin: process.env.CORS_ORIGIN || "*",
+    origin: true,
   });
 
-  await fastify.register(requestIdPlugin);
-
+  // Swagger com configuração detalhada
   await fastify.register(swagger, {
     openapi: {
       info: {
         title: "FinMath API",
-        version: "1.0.0",
+        description: "API de Matemática Financeira - Sprint 2",
+        version: "0.2.0",
       },
-      servers: [{ url: "http://localhost:3001" }],
+      servers: [
+        {
+          url: "http://localhost:3001",
+          description: "Servidor de desenvolvimento",
+        },
+      ],
+      components: {
+        schemas: {
+          PriceRequest: {
+            type: "object",
+            required: ["pv", "rate", "n"],
+            properties: {
+              pv: {
+                type: "number",
+                description: "Valor presente (principal)",
+                example: 100000,
+              },
+              rate: {
+                type: "number",
+                description: "Taxa de juros por período (decimal)",
+                example: 0.01,
+              },
+              n: {
+                type: "integer",
+                description: "Número de períodos",
+                example: 12,
+              },
+            },
+          },
+          SacRequest: {
+            type: "object",
+            required: ["pv", "rate", "n"],
+            properties: {
+              pv: {
+                type: "number",
+                description: "Valor presente (principal)",
+                example: 100000,
+              },
+              rate: {
+                type: "number",
+                description: "Taxa de juros por período (decimal)",
+                example: 0.01,
+              },
+              n: {
+                type: "integer",
+                description: "Número de períodos",
+                example: 12,
+              },
+            },
+          },
+          CetBasicRequest: {
+            type: "object",
+            required: ["pv", "rate", "n"],
+            properties: {
+              pv: {
+                type: "number",
+                description: "Valor financiado",
+                example: 100000,
+              },
+              rate: {
+                type: "number",
+                description: "Taxa de juros mensal (decimal)",
+                example: 0.01,
+              },
+              n: {
+                type: "integer",
+                description: "Número de parcelas",
+                example: 12,
+              },
+              iof: {
+                type: "number",
+                description: "IOF (opcional)",
+                example: 150,
+              },
+              tac: {
+                type: "number",
+                description: "TAC (opcional)",
+                example: 50,
+              },
+            },
+          },
+        },
+      },
     },
   });
 
-  await fastify.register(swaggerUI, {
+  await fastify.register(swaggerUi, {
     routePrefix: "/api-docs",
+    uiConfig: {
+      docExpansion: "list",
+      deepLinking: true,
+      defaultModelsExpandDepth: 3,
+      defaultModelExpandDepth: 3,
+    },
+    staticCSP: true,
   });
 
-  fastify.get("/health", async () => ({
-    status: "healthy",
-    motorVersion: "0.4.0",
-    timestamp: new Date().toISOString(),
-  }));
-
-  await fastify.register(dayCountRoutes, { prefix: "/api" });
+  // Rotas
   await fastify.register(priceRoutes, { prefix: "/api" });
-  await fastify.register(sacRoutes, { prefix: "/api" }); // ✅ ADICIONADO
-
-  fastify.setErrorHandler(errorHandler);
+  await fastify.register(sacRoutes, { prefix: "/api" });
+  await fastify.register(cetRoutes, { prefix: "/api" });
+  await fastify.register(snapshotRoutes, { prefix: "/api" });
+  await fastify.register(validatorRoutes, { prefix: "/api" });
 
   return fastify;
-}
-
-async function start() {
-  const server = await buildServer();
-  await server.listen({ port: 3001, host: "0.0.0.0" });
-}
-
-if (import.meta.url === `file://${process.argv[1]}`) {
-  start();
 }

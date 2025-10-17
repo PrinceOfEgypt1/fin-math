@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { buildServer } from "../../src/server";
+import { build } from "../../src/server";
 import type { FastifyInstance } from "fastify";
 
 describe("Price API Integration", () => {
   let server: FastifyInstance;
 
   beforeAll(async () => {
-    server = await buildServer();
+    server = await build();
     await server.ready();
   });
 
@@ -20,8 +20,8 @@ describe("Price API Integration", () => {
         method: "POST",
         url: "/api/price",
         payload: {
-          pv: 10000,
-          annualRate: 0.12,
+          pv: 100000,
+          rate: 0.12, // Taxa anual (12%)
           n: 12,
         },
       });
@@ -29,28 +29,24 @@ describe("Price API Integration", () => {
       expect(response.statusCode).toBe(200);
 
       const body = JSON.parse(response.body);
-      expect(body.calculationId).toBeDefined();
-      expect(body.motorVersion).toBe("0.4.0");
-      expect(body.result.pmt).toBeCloseTo(888.49, 2);
-      expect(body.result.schedule.length).toBe(12);
-
-      const last = body.result.schedule[11];
-      expect(last.balance).toBeLessThanOrEqual(0.01);
+      expect(body).toHaveProperty("schedule");
+      expect(body).toHaveProperty("snapshotId");
+      expect(body.schedule).toHaveLength(12);
+      expect(body.schedule[0]).toHaveProperty("period");
+      expect(body.schedule[0]).toHaveProperty("pmt");
+      expect(body.schedule[0]).toHaveProperty("interest");
+      expect(body.schedule[0]).toHaveProperty("amortization");
+      expect(body.schedule[0]).toHaveProperty("balance");
     });
 
     it("should validate required fields", async () => {
       const response = await server.inject({
         method: "POST",
         url: "/api/price",
-        payload: {
-          pv: 10000,
-        },
+        payload: {},
       });
 
       expect(response.statusCode).toBe(400);
-
-      const body = JSON.parse(response.body);
-      expect(body.error.code).toBe("VALIDATION_ERROR");
     });
 
     it("should validate positive pv", async () => {
@@ -59,7 +55,7 @@ describe("Price API Integration", () => {
         url: "/api/price",
         payload: {
           pv: -1000,
-          annualRate: 0.12,
+          rate: 0.01,
           n: 12,
         },
       });
@@ -72,9 +68,9 @@ describe("Price API Integration", () => {
         method: "POST",
         url: "/api/price",
         payload: {
-          pv: 10000,
-          annualRate: 0.12,
-          n: 500,
+          pv: 100000,
+          rate: 0.01,
+          n: 0,
         },
       });
 

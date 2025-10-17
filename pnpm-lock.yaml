@@ -72,7 +72,7 @@ importers:
         specifier: workspace:*
         version: link:../engine
       decimal.js:
-        specifier: ^10.4.3
+        specifier: ^10.6.0
         version: 10.6.0
       fastify:
         specifier: ^4.29.0

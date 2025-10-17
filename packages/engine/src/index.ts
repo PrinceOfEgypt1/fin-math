@@ -23,3 +23,4 @@ export * from "./day-count/index.js";
 export * from "./amortization/index.js";
 
 export const ENGINE_VERSION = "0.4.0";
+export { cetBasic } from "./modules/cet";

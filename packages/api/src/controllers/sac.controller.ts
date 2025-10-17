@@ -1,19 +1,27 @@
+// packages/api/src/controllers/sac.controller.ts
 import { FastifyRequest, FastifyReply } from "fastify";
 import { SacRequestSchema } from "../schemas/sac.schema";
-import { calculateSac } from "../services/sac.service";
+import { snapshotService } from "../services/snapshot.service";
 
-export async function postSac(req: FastifyRequest, reply: FastifyReply) {
-  const parsed = SacRequestSchema.safeParse(req.body);
-  if (!parsed.success) {
-    return reply
-      .status(422)
-      .send({
-        errors: parsed.error.errors.map((e) => ({
-          path: e.path,
-          message: e.message,
-        })),
-      });
+export async function postSac(request: FastifyRequest, reply: FastifyReply) {
+  try {
+    const body = SacRequestSchema.parse(request.body);
+
+    // TODO: Implementar SAC quando disponível no motor
+    return reply.status(501).send({
+      error: {
+        code: "NOT_IMPLEMENTED",
+        message: "SAC system not yet implemented in engine",
+        details: "Use POST /api/price for now",
+      },
+    });
+  } catch (error: any) {
+    return reply.status(400).send({
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Validation failed",
+        details: error.errors || [{ message: error.message }],
+      },
+    });
   }
-  const result = await calculateSac(parsed.data);
-  return reply.send(result);
 }
