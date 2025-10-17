@@ -1,19 +1,19 @@
 # 📋 FinMath Project Board
 
 **Última atualização:** 2025-10-17  
-**Sprint atual:** Sprint 2 ✅ Concluída
+**Sprint atual:** Sprint 3 ✅ Concluída
 
 ---
 
 ## 📊 Status Geral
 
-| Métrica                 | Valor                              |
-| ----------------------- | ---------------------------------- |
-| **Sprints Concluídas**  | 2                                  |
-| **Histórias Entregues** | 6 (H9, H12, H21, H22, parcial H10) |
-| **Aprovação Testes**    | 96% (24/25)                        |
-| **Commits**             | 8                                  |
-| **Documentação**        | 4 docs (1.916 linhas)              |
+| Métrica                 | Valor                                |
+| ----------------------- | ------------------------------------ |
+| **Sprints Concluídas**  | 3                                    |
+| **Histórias Entregues** | 9 (H9, H10, H11, H12, H13, H21, H22) |
+| **Aprovação Testes**    | 96% (24/25)                          |
+| **Commits**             | 8                                    |
+| **Documentação**        | 4 docs (1.916 linhas)                |
 
 ---
 
