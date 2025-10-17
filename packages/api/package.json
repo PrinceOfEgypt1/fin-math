@@ -15,8 +15,8 @@
     "test:integration": "vitest run test/integration",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix"
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
   "keywords": [
     "finance",
