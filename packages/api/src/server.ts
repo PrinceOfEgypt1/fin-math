@@ -8,6 +8,7 @@ import { sacRoutes } from "./routes/sac.routes";
 import { cetRoutes } from "./routes/cet.routes";
 import { snapshotRoutes } from "./routes/snapshot.routes";
 import { validatorRoutes } from "./routes/validator.routes";
+import { reportsRoutes } from "./routes/reports.routes";
 
 export async function build(): Promise<FastifyInstance> {
   const fastify = Fastify({
@@ -26,8 +27,8 @@ export async function build(): Promise<FastifyInstance> {
     openapi: {
       info: {
         title: "FinMath API",
-        description: "API de Matemática Financeira - Sprint 2",
-        version: "0.2.0",
+        description: "API de Matemática Financeira - Sprint 3",
+        version: "0.3.0",
       },
       servers: [
         {
@@ -132,6 +133,7 @@ export async function build(): Promise<FastifyInstance> {
   await fastify.register(cetRoutes, { prefix: "/api" });
   await fastify.register(snapshotRoutes, { prefix: "/api" });
   await fastify.register(validatorRoutes, { prefix: "/api" });
+  await fastify.register(reportsRoutes, { prefix: "/api" });
 
   return fastify;
 }

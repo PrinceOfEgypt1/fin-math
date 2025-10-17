@@ -3,21 +3,23 @@ import Papa from "papaparse";
 
 function toCSV(rows: any[], totals: any, meta: any) {
   const table = rows.map((r: any) => ({
-    "#": r.k,
-    PMT: r.pmt,
-    Juros: r.interest,
-    Amortizacao: r.amort,
-    Saldo: r.balance,
-    Data: r.date ?? "",
+    "#": r.period || r.k || "",
+    PMT: r.pmt || "",
+    Juros: r.interest || "",
+    Amortizacao: r.amortization || r.amort || "",
+    Saldo: r.balance || "",
+    Data: r.date || "",
   }));
+
   const csvTable = Papa.unparse(table, { delimiter: ";" });
-  const footer = `\n# totals.totalPaid;${totals?.totalPaid ?? ""}\n# totals.totalInterest;${totals?.totalInterest ?? ""}\n# feesT0;${totals?.feesT0 ?? ""}\n# motorVersion;${meta?.motorVersion ?? ""}\n# calculationId;${meta?.calculationId ?? ""}\n`;
+
+  const footer = `\n# totals.totalPaid;${totals?.totalPaid || ""}\n# totals.totalInterest;${totals?.totalInterest || ""}\n# feesT0;${totals?.feesT0 || ""}\n# motorVersion;${meta?.motorVersion || ""}\n# calculationId;${meta?.calculationId || ""}\n`;
+
   return csvTable + footer;
 }
 
 export async function reportsRoutes(app: FastifyInstance) {
   app.post("/reports/price.csv", async (req, reply) => {
-    // ✅ Sem /api
     const res = await app.inject({
       method: "POST",
       url: "/api/price",
@@ -29,7 +31,7 @@ export async function reportsRoutes(app: FastifyInstance) {
     }
 
     const data = res.json() as any;
-    const csv = toCSV(data.schedule, data.totals, data.meta);
+    const csv = toCSV(data.schedule || [], data.totals || {}, data.meta || {});
 
     reply.header("Content-Type", "text/csv; charset=utf-8");
     reply.header("Content-Disposition", "attachment; filename=price.csv");
@@ -37,7 +39,6 @@ export async function reportsRoutes(app: FastifyInstance) {
   });
 
   app.post("/reports/sac.csv", async (req, reply) => {
-    // ✅ Sem /api
     const res = await app.inject({
       method: "POST",
       url: "/api/sac",
@@ -49,7 +50,7 @@ export async function reportsRoutes(app: FastifyInstance) {
     }
 
     const data = res.json() as any;
-    const csv = toCSV(data.schedule, data.totals, data.meta);
+    const csv = toCSV(data.schedule || [], data.totals || {}, data.meta || {});
 
     reply.header("Content-Type", "text/csv; charset=utf-8");
     reply.header("Content-Disposition", "attachment; filename=sac.csv");
