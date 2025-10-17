@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { buildServer } from "../../src/server";
+import { build } from "../../src/server";
 import type { FastifyInstance } from "fastify";
 
 describe("Infrastructure - API Base", () => {
   let server: FastifyInstance;
 
   beforeAll(async () => {
-    server = await buildServer();
+    server = await build();
     await server.ready();
   });
 
