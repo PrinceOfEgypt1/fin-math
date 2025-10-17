@@ -54,14 +54,15 @@ function generatePDF(
 
       // Table Header
       const tableTop = doc.y;
-      const colWidths = [40, 80, 80, 100, 100];
+      const colWidths: number[] = [40, 80, 80, 100, 100];
       const headers = ["#", "PMT", "Juros", "Amortização", "Saldo"];
 
       doc.fontSize(10).font("Helvetica-Bold");
       let x = 50;
       headers.forEach((header, i) => {
-        doc.text(header, x, tableTop, { width: colWidths[i], align: "center" });
-        x += colWidths[i];
+        const width = colWidths[i] || 80; // Fallback para 80
+        doc.text(header, x, tableTop, { width, align: "center" });
+        x += width;
       });
 
       doc.moveDown();
