@@ -3,7 +3,7 @@
 
 # 📋 GitHub Project Board - FinMath
 
-**URL:** https://github.com/users/PrinceOfEgypt1/projects/[NÚMERO]
+**URL:** https://github.com/users/PrinceOfEgypt1/projects/3
 
 ## Colunas
 
