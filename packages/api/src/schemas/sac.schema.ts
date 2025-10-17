@@ -1,8 +1,10 @@
+// packages/api/src/schemas/sac.schema.ts
 import { z } from "zod";
+
 export const SacRequestSchema = z.object({
-  pv: z.number().min(100),
-  rateMonthly: z.number().min(0),
-  n: z.number().int().min(1),
-  feesT0: z.number().min(0).default(0),
+  pv: z.number().positive().describe("Valor presente (principal)"),
+  rate: z.number().positive().describe("Taxa de juros por período"),
+  n: z.number().int().positive().describe("Número de períodos"),
 });
+
 export type SacRequest = z.infer<typeof SacRequestSchema>;

@@ -1,0 +1,209 @@
+🔍 INVESTIGAÇÃO COMPLETA - FINMATH PROJECT
+==========================================
+
+📊 1. MÓDULOS DO ENGINE
+----------------------
+
+📄 CET.TS (crítico para Sprint 2):
+-----------------------------------
+import { irrBisection } from "./irr.js";
+export function cetBasic(
+  pv: number | string,
+  pmt: number | string,
+  n: number,
+  feesT0: Array<number | string> = [],
+  baseAnnual = 12,
+) {
+  const fees = feesT0.reduce<number>(
+    (s: number, v: number | string) => s + Number(v),
+    0,
+  );
+  const cfs = [
+    Number(pv) - Number(fees),
+    ...Array.from({ length: n }, () => -Number(pmt)),
+  ];
+  const irr = irrBisection(cfs) ?? 0;
+  const cetAnnual = Math.pow(1 + irr, baseAnnual) - 1;
+  return { irrMonthly: irr, cetAnnual, cashflows: cfs };
+}
+
+Tamanho: 20 linhas
+
+📄 AMORTIZATION.TS:
+-------------------
+import { d, round2 } from "../util/round.js";
+import { pmt as pmtSeries } from "./series.js";
+
+export function price(pv: string | number, i: string | number, n: number) {
+  const PMT = round2(pmtSeries(pv, i, n)).toNumber();
+  let bal = d(pv);
+  const rows: Array<{
+    k: number;
+    pmt: number;
+    interest: number;
+    amort: number;
+    balance: number;
+  }> = [];
+  for (let k = 1; k <= n; k++) {
+    const interest = round2(bal.mul(i)).toNumber();
+    let amort = round2(PMT - interest).toNumber();
+    if (k === n) amort = round2(bal).toNumber();
+    const newBal = round2(bal.minus(amort)).toNumber();
+    rows.push({ k, pmt: PMT, interest, amort, balance: newBal });
+    bal = d(newBal);
+  }
+  const total = rows.reduce((s, r) => s + r.pmt, 0);
+  const juros = total - d(pv).toNumber();
+  return {
+    pmt: PMT,
+    rows,
+    totalPaid: round2(total).toNumber(),
+    totalInterest: round2(juros).toNumber(),
+  };
+}
+... (truncado)
+
+📄 IRR.TS:
+----------
+import { d } from "../util/round.js";
+export function npv(r: number | string, cfs: Array<string | number>) {
+  const R = d(r);
+  return cfs.reduce((s, cf, t) => s.plus(d(cf).div(d(1).add(R).pow(t))), d(0));
+}
+export function irrBisection(cfs: Array<string | number>, lo = 0, hi = 1) {
+  let fLo = npv(lo, cfs),
+    fHi = npv(hi, cfs);
+  let tries = 0;
+  while (fLo.mul(fHi).gt(0) && hi < 10 && tries < 30) {
+    hi *= 1.5;
+    fHi = npv(hi, cfs);
+    tries++;
+  }
+  if (fLo.mul(fHi).gt(0)) return null;
+  for (let k = 0; k < 120; k++) {
+    const mid = (lo + hi) / 2,
+      fMid = npv(mid, cfs);
+    if (fMid.abs().lt(1e-12)) return mid;
+    if (fLo.mul(fMid).lt(0)) {
+      hi = mid;
+      fHi = fMid;
+    } else {
+      lo = mid;
+      fLo = fMid;
+    }
+  }
+  return (lo + hi) / 2;
+}
+
+🧪 2. TESTES UNITÁRIOS
+---------------------
+
+Estrutura:
+total 16K
+drwxr-xr-x 4 moses moses 4.0K Oct 13 18:40 .
+drwxr-xr-x 4 moses moses 4.0K Oct 13 18:40 ..
+drwxr-xr-x 2 moses moses 4.0K Oct 13 18:40 amortization
+drwxr-xr-x 2 moses moses 4.0K Oct 13 18:40 day-count
+
+🏆 3. GOLDEN FILES
+-----------------
+
+📁 Onda 1:
+total 24K
+drwxr-xr-x 2 moses moses 4.0K Oct 13 18:40 .
+drwxr-xr-x 4 moses moses 4.0K Oct 13 18:40 ..
+-rw-r--r-- 1 moses moses  453 Oct 13 18:40 DAYCOUNT_001.json
+-rw-r--r-- 1 moses moses  457 Oct 13 18:40 DAYCOUNT_002.json
+-rw-r--r-- 1 moses moses  457 Oct 13 18:40 DAYCOUNT_003.json
+-rw-r--r-- 1 moses moses 1.6K Oct 13 18:40 runner.test.ts
+
+📁 Onda 2:
+total 24K
+drwxr-xr-x 2 moses moses 4.0K Oct 13 18:40 .
+drwxr-xr-x 4 moses moses 4.0K Oct 13 18:40 ..
+-rw-r--r-- 1 moses moses  565 Oct 13 18:40 PRICE_001.json
+-rw-r--r-- 1 moses moses  386 Oct 13 18:40 PRICE_002.json
+-rw-r--r-- 1 moses moses  387 Oct 13 18:40 PRICE_003.json
+-rw-r--r-- 1 moses moses 1.3K Oct 13 18:40 runner.test.ts
+
+🌐 4. API - ESTRUTURA
+--------------------
+
+📂 Routes:
+total 24K
+drwxr-xr-x  2 moses moses 4.0K Oct 14 19:23 .
+drwxr-xr-x 11 moses moses 4.0K Oct 14 19:23 ..
+-rw-r--r--  1 moses moses 1.9K Oct 14 19:26 day-count.routes.ts
+-rw-r--r--  1 moses moses  234 Oct 13 23:10 price.routes.ts
+-rw-r--r--  1 moses moses 1.9K Oct 13 23:10 reports.routes.ts
+-rw-r--r--  1 moses moses  204 Oct 13 23:10 sac.routes.ts
+
+📂 Controllers:
+total 16K
+drwxr-xr-x  2 moses moses 4.0K Oct 13 19:59 .
+drwxr-xr-x 11 moses moses 4.0K Oct 14 19:23 ..
+-rw-r--r--  1 moses moses  711 Oct 13 23:10 price.controller.ts
+-rw-r--r--  1 moses moses  587 Oct 13 22:44 sac.controller.ts
+
+📂 Schemas:
+total 20K
+drwxr-xr-x  2 moses moses 4.0K Oct 13 19:59 .
+drwxr-xr-x 11 moses moses 4.0K Oct 14 19:23 ..
+-rw-r--r--  1 moses moses  386 Oct 13 18:40 day-count.schema.ts
+-rw-r--r--  1 moses moses  990 Oct 13 23:10 price.schema.ts
+-rw-r--r--  1 moses moses  262 Oct 13 19:59 sac.schema.ts
+
+📂 Services:
+total 16K
+drwxr-xr-x  2 moses moses 4.0K Oct 14 19:56 .
+drwxr-xr-x 11 moses moses 4.0K Oct 14 19:23 ..
+-rw-r--r--  1 moses moses  889 Oct 14 19:56 price.service.ts
+-rw-r--r--  1 moses moses 1.6K Oct 13 22:44 sac.service.ts
+
+🧪 5. RODAR TESTES
+-----------------
+
+Executando testes do engine...
+
+> @finmath/engine@0.4.0 test /home/moses/workspace/fin-math/packages/engine
+> vitest run
+
+
+ RUN  v1.6.1 /home/moses/workspace/fin-math/packages/engine
+
+ ✓ src/smoke.test.ts  (1 test) 2ms
+ ✓ test/smoke.spec.ts  (1 test) 1ms
+ ✓ test/unit/day-count/conventions.test.ts  (8 tests) 4ms
+ ✓ test/unit/amortization/price.test.ts  (5 tests) 5ms
+ ✓ test/unit/day-count/pro-rata.test.ts  (3 tests) 2ms
+ ✓ test/golden/onda1/runner.test.ts  (3 tests) 4ms
+ ✓ test/golden/onda2/runner.test.ts  (3 tests) 4ms
+ ✓ test/golden.spec.ts  (30 tests) 145ms
+
+ Test Files  8 passed (8)
+      Tests  54 passed (54)
+   Start at  20:25:55
+   Duration  801ms (transform 574ms, setup 1ms, collect 754ms, tests 167ms, environment 1ms, prepare 1.93s)
+
+
+🏆 6. GOLDEN FILES TEST
+----------------------
+
+Executando golden files test...
+
+> @finmath/engine@0.4.0 test:golden /home/moses/workspace/fin-math/packages/engine
+> vitest run test/golden.spec.ts
+
+
+ RUN  v1.6.1 /home/moses/workspace/fin-math/packages/engine
+
+ ✓ test/golden.spec.ts  (30 tests) 95ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  20:25:56
+   Duration  683ms (transform 77ms, setup 0ms, collect 86ms, tests 95ms, environment 0ms, prepare 146ms)
+
+
+==========================================
+✅ INVESTIGAÇÃO COMPLETA

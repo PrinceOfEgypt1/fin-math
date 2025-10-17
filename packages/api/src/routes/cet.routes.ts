@@ -1,6 +1,7 @@
+// packages/api/src/routes/cet.routes.ts
 import { FastifyInstance } from "fastify";
-import { postCETBasic } from "../controllers/cet.controller";
+import { postCetBasic } from "../controllers/cet.controller";
 
-export async function cetRoutes(app: FastifyInstance) {
-  app.post("/cet/basic", postCETBasic);
+export async function cetRoutes(fastify: FastifyInstance) {
+  fastify.post("/cet/basic", postCetBasic);
 }
