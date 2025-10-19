@@ -15,8 +15,6 @@ jobs:
       
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,5 +30,3 @@ jobs:
       
       - name: Run tests
         run: pnpm -F @finmath/engine test
-
-# CI corrigido em 19/10/2025
