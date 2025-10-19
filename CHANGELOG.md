@@ -5,125 +5,144 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
-## [Unreleased]
+## [0.4.0] - 2025-10-18
 
-## [0.3.0] - 2025-10-17
+### Added
 
-### Sprint 3 - Completar APIs + Exportações
+- ✨ **IRR com Método de Brent** (H15)
+  - Implementação robusta do Método de Brent para cálculo de TIR
+  - Fallback para bissecção em casos extremos
+  - Precisão de ±0.01% em taxa
+- ✨ **CET Completo** (H16)
+  - Suporte a IOF (diário + adicional)
+  - Suporte a seguros (fixo, % PV, % saldo)
+  - Breakdown detalhado de custos
+  - Precisão de ±0.01 p.p. em taxa
+- ✨ **NPV (Valor Presente Líquido)** (H14)
+  - Cálculo preciso com decimal.js
+  - Suporte a fluxos irregulares
+- ✨ **Perfis CET por Instituição** (H17)
+  - Versionamento de perfis
+  - Suporte a múltiplas instituições financeiras
+- ✨ **Evidências de Mercado** (H23)
+  - 3 cenários reais validados
+  - Golden Files com casos de mercado
+  - Documentação de divergências entre instituições
 
-#### Added
+- 📚 **Documentação API Completa**
+  - TypeDoc com navegação HTML
+  - 30+ funções documentadas
+  - 3 exemplos práticos (Price, CET, IRR)
+  - JSDoc detalhado em todas as funções públicas
 
-- **SAC API**: Endpoint `POST /api/sac` funcional (200 OK)
-  - Motor `generateSacSchedule` com amortização constante
-  - Integração com snapshots
-  - Cronograma completo com 12 parcelas
-  - Commit: `a11a2a6`
+### Changed
 
-- **Exportações CSV**: Implementação completa
-  - `POST /api/reports/price.csv` - Exportar cronograma Price
-  - `POST /api/reports/sac.csv` - Exportar cronograma SAC
-  - Formato padrão: `#;PMT;Juros;Amortizacao;Saldo;Data`
-  - Separador: ponto-e-vírgula (`;`)
-  - Commit: `30cb764`
+- 🔧 **Migração de Bissecção para Brent**
+  - Método de Brent é mais robusto e rápido
+  - Convergência garantida em mais casos
+- 📈 **Precisão de CET melhorada**
+  - Erro máximo reduzido para ±0.01 p.p.
+  - Arredondamento consistente Half-Up
 
-- **Exportações PDF**: Implementação completa
-  - `POST /api/reports/price.pdf` - Exportar PDF Price
-  - `POST /api/reports/sac.pdf` - Exportar PDF SAC
-  - Biblioteca: pdfkit ^0.17.2
-  - Tabela formatada com cabeçalho e rodapé
-  - Commit: `40a7b59`
+### Fixed
 
-#### Fixed
+- 🐛 **Ajuste final em cronogramas**
+  - Saldo final sempre ≤ 0.01
+  - Correção de acúmulo de erros de arredondamento
+- 🐛 **Arredondamento Half-Up**
+  - Implementação consistente em todos os módulos
+  - Alinhamento com práticas de mercado
 
-- **TypeScript**: Corrigido erro `TS2532` em `reports.routes.ts`
-  - Adicionado tipo explícito para `colWidths`
-  - Fallback seguro para larguras de colunas
-  - Commit: `a1bb7cf`
+### Tests
 
-#### Changed
-
-- **API Version**: Atualizada para 0.3.0 (Sprint 3)
-- **Dependencies**:
-  - Adicionado pdfkit ^0.17.2
-  - Adicionado @types/pdfkit ^0.17.3
-  - Commit: `666ce88`
-
-### Quality Metrics
-
-- ✅ Testes: 54/54 passando (100%)
-- ✅ Cobertura: ≥ 80%
-- ✅ Build: Engine + API sem erros
-- ✅ TypeCheck: Sem erros TypeScript
-
----
+- 🧪 **30 Golden Files validados**
+  - PRICE: 5 arquivos
+  - SAC: 5 arquivos
+  - SERIES: 4 arquivos
+  - NPVIRR: 5 arquivos
+  - CET: 5 arquivos
+  - EQ: 3 arquivos
+  - JC: 3 arquivos
 
 ## [0.2.0] - 2025-10-15
 
-### Sprint 2 - Amortizações + CET Básico
+### Added
 
-#### Added
+- ✨ **Sistema Price completo** (H9)
+  - Cálculo de PMT
+  - Geração de cronograma
+  - Ajuste final de centavos
+- ✨ **Sistema SAC completo** (H11)
+  - Amortização constante
+  - Geração de cronograma
+  - Ajuste final
+- ✨ **CET Básico** (H12)
+  - Cálculo com tarifas t0
+  - Método de IRR simplificado
+- ✨ **Day Count** (H10)
+  - Convenções 30/360 e ACT/365
+  - Pró-rata para primeira parcela
+  - Year fraction preciso
 
-- **Price API**: Endpoint `POST /api/price`
-- **CET Básico**: Endpoint `POST /api/cet/basic`
-- **Snapshots**: Sistema de versionamento com hash
-- **Validador**: Endpoint `POST /api/validate/schedule`
+- ✨ **Snapshots e Validador** (H21, H22)
+  - Sistema de snapshots com hash SHA-256
+  - Validador de cronogramas
+  - motorVersion tracking
 
-#### Changed
+### Changed
 
-- Motor de cálculo consolidado
-- Integração com decimal.js
+- 🔧 Estrutura de módulos reorganizada
+- 📊 Golden Files padronizados
+
+## [0.1.0] - 2025-10-12
+
+### Added
+
+- ✨ **Juros Compostos** (H4)
+  - FV (Valor Futuro)
+  - PV (Valor Presente)
+- ✨ **Equivalência de Taxas** (H5)
+  - Conversão mensal ↔ anual
+  - Taxa real (ajuste de inflação)
+- ✨ **Séries Uniformes** (H6)
+  - PMT postecipada
+  - PMT antecipada
+  - Inversão (PV a partir de PMT)
+
+- 🏗️ **Infraestrutura Inicial**
+  - Monorepo com pnpm
+  - TypeScript + ESLint
+  - Vitest para testes
+  - GitHub Actions CI/CD
+
+- 🧪 **Sistema de Testes**
+  - Testes unitários
+  - Testes de propriedade (fast-check)
+  - Golden Files
+  - 80%+ cobertura
+
+### Dependencies
+
+- decimal.js ^10.4.3 (precisão arbitrária)
+- date-fns ^4.1.0 (manipulação de datas)
+- zod ^3.23.8 (validação de schemas)
 
 ---
 
-## [0.1.0] - 2025-10-13
+## Tipos de Mudanças
 
-### Sprint 1 - Motor Básico
+- `Added` para novas funcionalidades
+- `Changed` para mudanças em funcionalidades existentes
+- `Deprecated` para funcionalidades obsoletas
+- `Removed` para funcionalidades removidas
+- `Fixed` para correções de bugs
+- `Security` para correções de vulnerabilidades
+- `Tests` para adições/mudanças em testes
+- `Docs` para documentação
 
-#### Added
+## Links
 
-- **Day Count**: Convenções 30/360, ACT/365, ACT/360
-- **Pro-rata**: Cálculo de primeira parcela
-- **Juros Compostos**: FV/PV
-- **Equivalência de Taxas**: Mensal/Anual
-- **Séries/Anuidades**: Post/Ant
-- **Golden Files**: 30 arquivos de validação
-
-#### Changed
-
-- Estrutura de monorepo com pnpm
-- CI/CD com GitHub Actions
-
----
-
-## [0.0.1] - 2025-10-11
-
-### Sprint 0 - Kickoff
-
-#### Added
-
-- Estrutura inicial do projeto
-- Configuração TypeScript
-- Decimal.js para precisão monetária
-- Vitest para testes
-- ESLint + Prettier
-
----
-
-## Notas de Versão
-
-### Convenções de Commit
-
-- `feat`: Nova funcionalidade
-- `fix`: Correção de bug
-- `docs`: Apenas documentação
-- `chore`: Manutenção/config
-- `test`: Adicionar testes
-
-### Tipos de Mudança
-
-- `Added`: Nova funcionalidade
-- `Changed`: Mudança em funcionalidade existente
-- `Deprecated`: Funcionalidade obsoleta
-- `Removed`: Funcionalidade removida
-- `Fixed`: Correção de bug
-- `Security`: Vulnerabilidade corrigida
+- [Unreleased]: https://github.com/PrinceOfEgypt1/fin-math/compare/v0.4.0...HEAD
+- [0.4.0]: https://github.com/PrinceOfEgypt1/fin-math/compare/v0.2.0...v0.4.0
+- [0.2.0]: https://github.com/PrinceOfEgypt1/fin-math/compare/v0.1.0...v0.2.0
+- [0.1.0]: https://github.com/PrinceOfEgypt1/fin-math/releases/tag/v0.1.0
