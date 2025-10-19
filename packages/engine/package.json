@@ -8,8 +8,9 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "lint": "eslint .",
-    "test:golden": "vitest run test/golden.spec.ts"
+    "lint": "eslint src --ext .ts,.tsx",
+    "test:golden": "vitest run test/golden.spec.ts",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
