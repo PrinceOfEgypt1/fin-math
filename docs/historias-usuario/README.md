@@ -48,3 +48,9 @@
 ---
 
 **Última atualização:** 2025-10-19
+
+### Sprint 5 (Atual)
+
+| ID                                         | Título                 | Status      | Complexidade    |
+| ------------------------------------------ | ---------------------- | ----------- | --------------- |
+| [HU-25](./HU-25-simulador-cet-completo.md) | Simulador CET Completo | ✅ Aprovada | Muito Alta (13) |
