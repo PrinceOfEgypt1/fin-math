@@ -175,3 +175,35 @@ PrinceOfEgypt1
 
 **motorVersion: 0.4.0**  
 **Status: ✅ Produção (Biblioteca)**
+
+## ✨ HU-24: Comparação PRICE vs SAC
+
+**Status:** ✅ Implementado (Sprint 5)
+
+### Descrição
+
+Página dedicada para comparar os sistemas de amortização PRICE e SAC lado a lado, permitindo que o usuário visualize simultaneamente:
+
+- Parcelas de cada sistema
+- Total pago
+- Total de juros
+- **Economia ao escolher SAC**
+
+### Como Usar
+
+1. Acesse o menu "Comparar"
+2. Preencha os valores desejados
+3. Clique em "Comparar Sistemas"
+4. Analise os resultados lado a lado
+
+### Tecnologias
+
+- React Hooks (useState)
+- Decimal.js (precisão)
+- Framer Motion (animações)
+- Tailwind CSS (estilização)
+
+### Documentação
+
+- [História de Usuário Completa](./docs/historias-usuario/HU-24-comparacao-price-sac.md)
+- [Testes E2E](./packages/ui/test/e2e/comparison.spec.ts)
