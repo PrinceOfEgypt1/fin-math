@@ -76,7 +76,7 @@ Para atualizar status, mova cards no board - não edite este documento manualmen
 | --- | ------- | ------- | ------------ | ----- |
 | H13 | CSV/PDF | ✅ Done | H9, H11      | -     |
 
-### **Sprint 4 - IRR + CET** 📋 Planejada
+### **Sprint 4A - Backend (IRR + CET)** ✅ Completa
 
 | HU  | Título            | Status     | Dependências | Issue |
 | --- | ----------------- | ---------- | ------------ | ----- |
@@ -118,3 +118,23 @@ Para atualizar status, mova cards no board - não edite este documento manualmen
 ---
 
 **Última atualização:** 2025-10-17
+
+### **Sprint 4B - Frontend (UI)** ✅ Completa (2025-10-19)
+
+| HU    | Título                  | Status          | Dependências | Issue |
+| ----- | ----------------------- | --------------- | ------------ | ----- |
+| HU-09 | Simulador PRICE (UI)    | ✅ Implementado | Sprint 2     | -     |
+| HU-10 | Simulador SAC (UI)      | ✅ Implementado | Sprint 2     | -     |
+| HU-24 | Comparação PRICE vs SAC | ✅ Implementado | HU-09, HU-10 | -     |
+
+**Implementado:**
+
+- Interface completa React + Vite
+- Componentes: PriceSimulator, SacSimulator, ComparisonPage
+- Design System: Tailwind + Framer Motion
+- Navegação funcional
+
+**Débitos Técnicos:**
+
+- Issue #001: Testes unitários ComparisonPage
+- Issue #002: Acessibilidade
