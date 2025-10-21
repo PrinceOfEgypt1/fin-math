@@ -1,5 +1,5 @@
 {
-  "name": "finmath-engine",
+  "name": "@finmath/engine",
   "version": "0.4.1",
   "description": "Motor de cálculos financeiros de alta precisão para o mercado brasileiro",
   "main": "./dist/src/index.js",
