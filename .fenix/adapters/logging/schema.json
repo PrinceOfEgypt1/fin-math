@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": [
+    "timestamp",
+    "agent",
+    "calculationId",
+    "motorVersion",
+    "stage",
+    "hu",
+    "checks"
+  ],
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "agent": { "type": "string", "const": "Fenix" },
+    "calculationId": { "type": "string" },
+    "motorVersion": { "type": "string" },
+    "hu": { "type": "string" },
+    "stage": { "type": "string" },
+    "checks": { "type": "object" },
+    "kpis": { "type": "object" },
+    "artifacts": { "type": "array", "items": { "type": "string" } }
+  }
+}

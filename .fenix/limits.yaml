@@ -1,0 +1,4 @@
+limits:
+  max_prs_per_day: 3
+  max_commits_per_pr: 5
+  max_job_minutes: 30

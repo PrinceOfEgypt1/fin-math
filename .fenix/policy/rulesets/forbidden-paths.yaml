@@ -1,0 +1,7 @@
+forbidden:
+  - ".github/**"
+  - "infra/**"
+  - "scripts/**"
+exceptions:
+  - ".github/workflows/fenix-guard.yml"
+message_on_violation: "Fênix: alteração em área sensível bloqueada."
