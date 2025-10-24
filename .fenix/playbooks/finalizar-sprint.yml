@@ -1,0 +1,6 @@
+name: finalizar-sprint
+steps:
+  - id: final-checks
+    run: ".fenix/scripts/fenix-dry-run.sh --scope all --enforce --plan .fenix/artifacts/plan.final.md"
+  - id: release-notes
+    run: ".fenix/scripts/fenix-report.sh --release --out .fenix/artifacts/release-notes.md"

@@ -1,0 +1,8 @@
+name: durante-sprint
+steps:
+  - id: dry-run
+    run: ".fenix/scripts/fenix-dry-run.sh --scope changed --plan .fenix/artifacts/plan.daily.md"
+  - id: open-pr
+    run: "node .fenix/checks/validators/forbidden_paths.ts --mode=pr-guard || true && gh pr create -F .fenix/adapters/github/pr_template.md || true"
+  - id: kpis
+    run: ".fenix/scripts/fenix-report.sh --from ci --kpis --out .fenix/artifacts/kpis.daily.json"
