@@ -1,0 +1,16 @@
+name: Fenix Guard
+on:
+  pull_request:
+    branches: [ main, develop ]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if forbidden paths changed
+        run: |
+          set -e
+          BASE="origin/${{ github.base_ref }}"
+          git fetch origin "${{ github.base_ref }}:${{ github.base_ref }}" || true
+          CHANGED=$(git diff --name-only "$BASE"...HEAD || true)
+          echo "$CHANGED" | node .fenix/checks/validators/forbidden_paths.cjs

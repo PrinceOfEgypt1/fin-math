@@ -17,7 +17,10 @@
     "test:golden": "vitest run test/golden.spec.ts",
     "dev": "pnpm run dev:ui",
     "dev:demo": "python3 -m http.server 8080 -d apps/demo",
-    "pretest": "pnpm -F @finmath/engine build"
+    "pretest": "pnpm -F @finmath/engine build",
+    "fenix:plan": ".fenix/scripts/fenix-dry-run.sh --scope changed --plan .fenix/artifacts/plan.daily.md",
+    "fenix:kpis": ".fenix/scripts/fenix-report.sh --from ci --kpis --out .fenix/artifacts/kpis.daily.json",
+    "fenix:openapi": "node .fenix/checks/validators/openapi_check.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
