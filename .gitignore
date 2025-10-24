@@ -66,3 +66,4 @@ pnpm-debug.log*
 coverage/
 .nyc_output/
 *.lcov
+.fenix/artifacts

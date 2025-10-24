@@ -1,0 +1,13 @@
+openapi: 3.0.3
+info:
+  title: FinMath API
+  version: "0.1.0"
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      summary: Health Check
+      responses:
+        "200":
+          description: ok

@@ -1,0 +1,27 @@
+name: Fenix Guard
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main, develop ]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect PR labels
+        if: github.event_name == 'pull_request'
+        run: |
+          set -e
+          if [ -n "$GITHUB_EVENT_PATH" ]; then
+            PR_LABELS=$(jq -r '.pull_request.labels | map(.name) | join(",")' "$GITHUB_EVENT_PATH")
+            echo "PR_LABELS=$PR_LABELS" >> $GITHUB_ENV
+          fi
+
+      - name: Fail if forbidden paths changed
+        run: |
+          set -e
+          BASE="origin/${{ github.base_ref }}"
+          git fetch origin "${{ github.base_ref }}:${{ github.base_ref }}" || true
+          CHANGED=$(git diff --name-only "$BASE"...HEAD || true)
+          echo "$CHANGED" | node .fenix/checks/validators/forbidden_paths.cjs
