@@ -8,3 +8,6 @@ collections:
 
   - name: finmath-docs
     sources: ["sources/finmath-docs.sot.json"]
+
+  - name: finmath-docs-md
+    sources: ["sources/finmath-docs-md.sot.json"]
