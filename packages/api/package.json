@@ -38,6 +38,7 @@
     "@fastify/swagger-ui": "^4.1.0",
     "@finmath/engine": "workspace:*",
     "decimal.js": "^10.6.0",
+    "exceljs": "^4.4.0",
     "fastify": "^4.29.0",
     "papaparse": "^5.5.3",
     "pdfkit": "^0.17.2",
