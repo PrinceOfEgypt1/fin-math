@@ -5,3 +5,6 @@ collections:
     sources: ["sources/regras-criticas.sot.json"]
   - name: backlog-hu
     sources: ["sources/backlog-hu.sot.json"]
+
+  - name: finmath-docs
+    sources: ["sources/finmath-docs.sot.json"]
