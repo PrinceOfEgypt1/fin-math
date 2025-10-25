@@ -207,3 +207,5 @@ Página dedicada para comparar os sistemas de amortização PRICE e SAC lado a l
 
 - [História de Usuário Completa](./docs/historias-usuario/HU-24-comparacao-price-sac.md)
 - [Testes E2E](./packages/ui/test/e2e/comparison.spec.ts)
+
+Fênix: smoke test 2025-10-25T02:33:50-03:00
