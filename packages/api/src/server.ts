@@ -9,6 +9,9 @@ import { cetRoutes } from "./routes/cet.routes";
 import { snapshotRoutes } from "./routes/snapshot.routes";
 import { validatorRoutes } from "./routes/validator.routes";
 import { reportsRoutes } from "./routes/reports.routes";
+import { irrRoutes } from "./routes/irr.routes";
+import { perfisRoutes } from "./routes/perfis.routes";
+import { comparadorRoutes } from "./routes/comparador.routes";
 
 export async function build(): Promise<FastifyInstance> {
   const fastify = Fastify({
@@ -134,6 +137,9 @@ export async function build(): Promise<FastifyInstance> {
   await fastify.register(snapshotRoutes, { prefix: "/api" });
   await fastify.register(validatorRoutes, { prefix: "/api" });
   await fastify.register(reportsRoutes, { prefix: "/api" });
+  await fastify.register(irrRoutes, { prefix: "/api" });
+  await fastify.register(perfisRoutes, { prefix: "/api" });
+  await fastify.register(comparadorRoutes, { prefix: "/api" });
 
   return fastify;
 }
