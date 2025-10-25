@@ -76,3 +76,6 @@ analise-*.sh
 # relatórios/arquivos locais
 ANALISE-*.md
 analise-*.sh
+
+# meus rascunhos locais\ nplano-*.sh
+plano-*/
