@@ -68,3 +68,11 @@ coverage/
 *.lcov
 .fenix/artifacts
 .fenix/artifacts/*.json
+
+# relatórios/arquivos locais
+ANALISE-*.md
+analise-*.sh
+
+# relatórios/arquivos locais
+ANALISE-*.md
+analise-*.sh
