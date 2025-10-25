@@ -1,0 +1,30 @@
+{
+  "id": "banco_a@2025-01",
+  "instituicao": "Banco A",
+  "vigencia": {
+    "ini": "2025-01-01",
+    "fim": null
+  },
+  "daycount": "30360",
+  "arredondamento": "HALF_UP",
+  "iof": {
+    "adicional": {
+      "aliquota": 0.0038
+    },
+    "diario": {
+      "aliquotaDiaria": 0.000082,
+      "base": "ACT365",
+      "limite": 0.015
+    }
+  },
+  "tarifas": {
+    "t0": [{ "nome": "cadastro", "valor": 85.0 }],
+    "recorrentes": [{ "nome": "registro_mensal", "valor": 4.5, "inicio": 1 }]
+  },
+  "seguros": {
+    "tipo": "fixo",
+    "valor": 12.9
+  },
+  "prorata": true,
+  "observacoes": "Perfil padrão Banco A - 2025"
+}

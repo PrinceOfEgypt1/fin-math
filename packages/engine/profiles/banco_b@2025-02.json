@@ -1,0 +1,27 @@
+{
+  "id": "banco_b@2025-02",
+  "instituicao": "Banco B",
+  "vigencia": {
+    "ini": "2025-02-01",
+    "fim": null
+  },
+  "daycount": "ACT365",
+  "arredondamento": "HALF_UP",
+  "iof": {
+    "adicional": {
+      "aliquota": 0.0038
+    },
+    "diario": {
+      "aliquotaDiaria": 0.000082,
+      "base": "ACT365",
+      "limite": 0.015
+    }
+  },
+  "tarifas": {
+    "t0": [],
+    "recorrentes": []
+  },
+  "seguros": null,
+  "prorata": false,
+  "observacoes": "Banco B sem tarifas/seguros"
+}
