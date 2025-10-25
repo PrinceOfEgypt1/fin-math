@@ -83,3 +83,7 @@ plano-*/
 # meus rascunhos locais (corrigido)
 plano-*.sh
 plano-*/
+
+# Fênix RAG cache
+.fenix/rag/cache/
+
