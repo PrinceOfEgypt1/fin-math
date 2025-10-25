@@ -87,3 +87,7 @@ plano-*/
 # Fênix RAG cache
 .fenix/rag/cache/
 
+
+!scripts/*.sh
+
+!scripts/*.sh
