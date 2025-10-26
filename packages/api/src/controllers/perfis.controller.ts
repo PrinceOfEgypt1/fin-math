@@ -1,10 +1,11 @@
+// packages/api/src/controllers/perfis.controller.ts
 import { Request, Response } from "express";
 import { listarPerfis, buscarPerfil } from "../services/perfis.service";
 
-export async function listarPerfisEndpoint(req: Request, res: Response) {
+export async function listarPerfisEndpoint(_req: Request, res: Response) {
   try {
     const perfis = await listarPerfis();
-    res.json({
+    return res.json({
       success: true,
       version: "2025-01",
       data: perfis.map((p) => ({
@@ -13,21 +14,30 @@ export async function listarPerfisEndpoint(req: Request, res: Response) {
         vigencia: p.vigencia,
       })),
     });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return res.status(500).json({ success: false, error: message });
   }
 }
 
 export async function buscarPerfilEndpoint(req: Request, res: Response) {
   try {
-    const perfil = await buscarPerfil(req.params.id);
+    const { id } = (req.params ?? {}) as { id?: string };
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Parâmetro id ausente" });
+    }
+
+    const perfil = await buscarPerfil(id);
     if (!perfil) {
       return res
         .status(404)
         .json({ success: false, error: "Perfil não encontrado" });
     }
-    res.json({ success: true, data: perfil });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    return res.json({ success: true, data: perfil });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return res.status(500).json({ success: false, error: message });
   }
 }

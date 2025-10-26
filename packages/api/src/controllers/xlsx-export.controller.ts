@@ -1,3 +1,4 @@
+// packages/api/src/controllers/xlsx-export.controller.ts
 import { Request, Response } from "express";
 import { exportToXLSX } from "../services/xlsx-export.service";
 
@@ -15,8 +16,9 @@ export async function exportScheduleXLSX(req: Request, res: Response) {
       "Content-Disposition",
       "attachment; filename=cronograma.xlsx",
     );
-    res.send(buffer);
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    return res.send(buffer);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return res.status(500).json({ success: false, error: message });
   }
 }

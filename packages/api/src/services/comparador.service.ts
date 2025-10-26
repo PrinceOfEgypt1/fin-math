@@ -1,3 +1,4 @@
+// packages/api/src/services/comparador.service.ts
 import Decimal from "decimal.js";
 
 export interface CenarioInput {
@@ -17,36 +18,43 @@ export interface CenarioResultado {
   economiaVsMelhor?: number;
 }
 
-export async function compararCenarios(cenarios: CenarioInput[]) {
-  const resultados: CenarioResultado[] = [];
+export interface ComparadorResultado {
+  melhorCenario: string;
+  justificativa: string;
+  resultados: CenarioResultado[];
+}
 
-  for (const cenario of cenarios) {
-    const pv = new Decimal(cenario.pv);
-    const i = new Decimal(cenario.i);
-    const n = cenario.n;
+function calcularPMT(pv: number, i: number, n: number): number {
+  const I = new Decimal(i);
+  const N = new Decimal(n);
+  const PV = new Decimal(pv);
+  const num = PV.mul(I);
+  const den = new Decimal(1).minus(new Decimal(1).plus(I).pow(N.neg()));
+  return num.div(den).toNumber();
+}
 
-    // Calcular PMT (Price)
-    const pmt = pv
-      .mul(i)
-      .div(new Decimal(1).sub(new Decimal(1).add(i).pow(-n)));
+function estimarCETAnual(iMensal: number): number {
+  return new Decimal(1).plus(iMensal).pow(12).minus(1).mul(100).toNumber();
+}
 
-    const totalPago = pmt.mul(n);
-    const cetAnual = i.add(1).pow(12).sub(1).mul(100);
+export async function compararCenarios(
+  cenarios: CenarioInput[],
+): Promise<ComparadorResultado> {
+  const resultados: CenarioResultado[] = cenarios.map((c) => {
+    const pmt = calcularPMT(c.pv, c.i, c.n);
+    const totalPago = pmt * c.n;
+    const cetAnual = estimarCETAnual(c.i);
+    return { id: c.id, nome: c.nome, pmt, totalPago, cetAnual };
+  });
 
-    resultados.push({
-      id: cenario.id,
-      nome: cenario.nome,
-      pmt: pmt.toNumber(),
-      totalPago: totalPago.toNumber(),
-      cetAnual: cetAnual.toNumber(),
-    });
+  resultados.sort((a, b) => a.totalPago - b.totalPago);
+
+  if (resultados.length === 0) {
+    throw new Error("Nenhum cenário calculado");
   }
 
-  // Ordenar por total pago (menor = melhor)
-  resultados.sort((a, b) => a.totalPago - b.totalPago);
-  const melhor = resultados[0];
+  const melhor = resultados[0]!;
 
-  // Calcular economia vs melhor
   resultados.forEach((r) => {
     r.economiaVsMelhor = r.totalPago - melhor.totalPago;
   });

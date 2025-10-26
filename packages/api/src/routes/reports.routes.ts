@@ -38,11 +38,9 @@ function generatePDF(
         .fontSize(20)
         .text(`Cronograma de Amortização - ${systemType}`, { align: "center" });
       doc.moveDown();
-      doc
-        .fontSize(10)
-        .text(`Data: ${new Date().toLocaleDateString("pt-BR")}`, {
-          align: "right",
-        });
+      doc.fontSize(10).text(`Data: ${new Date().toLocaleDateString("pt-BR")}`, {
+        align: "right",
+      });
       doc.moveDown();
 
       if (amortConst) {
@@ -104,7 +102,7 @@ function generatePDF(
         .text("Gerado por FinMath API v0.3.0", { align: "center" });
 
       doc.end();
-    } catch (error) {
+    } catch (error: unknown) {
       reject(error);
     }
   });

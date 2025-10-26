@@ -9,9 +9,9 @@ import { cetRoutes } from "./routes/cet.routes";
 import { snapshotRoutes } from "./routes/snapshot.routes";
 import { validatorRoutes } from "./routes/validator.routes";
 import { reportsRoutes } from "./routes/reports.routes";
-import { irrRoutes } from "./routes/irr.routes";
-import { perfisRoutes } from "./routes/perfis.routes";
-import { comparadorRoutes } from "./routes/comparador.routes";
+import irrRoutes from "./routes/irr.routes";
+import perfisRoutes from "./routes/perfis.routes";
+import comparadorRoutes from "./routes/comparador.routes";
 
 export async function build(): Promise<FastifyInstance> {
   const fastify = Fastify({

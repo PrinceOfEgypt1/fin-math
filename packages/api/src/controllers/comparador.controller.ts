@@ -1,3 +1,4 @@
+// packages/api/src/controllers/comparador.controller.ts
 import { Request, Response } from "express";
 import { compararCenarios } from "../services/comparador.service";
 import { z } from "zod";
@@ -13,8 +14,7 @@ const ComparadorSchema = z.object({
         n: z.number().int().positive(),
       }),
     )
-    .min(2)
-    .max(5),
+    .min(2),
 });
 
 export async function compararCenariosEndpoint(req: Request, res: Response) {
@@ -22,11 +22,12 @@ export async function compararCenariosEndpoint(req: Request, res: Response) {
     const validated = ComparadorSchema.parse(req.body);
     const resultado = await compararCenarios(validated.cenarios);
 
-    res.json({
+    return res.json({
       success: true,
       data: resultado,
     });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return res.status(400).json({ success: false, error: message });
   }
 }
