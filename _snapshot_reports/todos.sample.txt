@@ -1,4 +1,0 @@
-3651:    echo "   ✅ Testes: TODOS PASSANDO!"
-4799:    echo "✅ TODOS OS TESTES BRENT: PASSARAM"
-5874:        echo "   ✅ Golden Files: TODOS PASSANDO"
-9656:    echo "   ✅ Testes: TODOS PASSANDO!"

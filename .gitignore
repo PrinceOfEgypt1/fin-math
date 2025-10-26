@@ -95,3 +95,8 @@ plano-*/
 .backups_api/
 _debug_*.tgz
 
+
+# Sanitização: ignorar artefatos locais / SO
+*.Zone.Identifier
+.DS_Store
+Thumbs.db

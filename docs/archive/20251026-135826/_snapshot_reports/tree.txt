@@ -1,0 +1,79 @@
+.
+├── .git
+│   └── logs
+│       ├── HEAD
+│       └── refs
+│           ├── heads
+│           │   ├── main
+│           │   ├── sprint-2
+│           │   └── sprint-4
+│           ├── remotes
+│           │   └── origin
+│           │       ├── main
+│           │       └── sprint-2
+│           └── stash
+├── .husky
+│   └── _
+│       └── husky.sh
+├── 04_h15_fix_brent_test.sh
+├── 05_h15_fix_exports.sh
+├── 11_fix_typescript_strict.sh
+├── 12_validacao_completa_h15.sh
+├── 13_limpeza_repositorio.sh
+├── 14_h15_parte3_cet_basico.sh
+├── 15_fix_cet_test_values.sh
+├── CHANGELOG.md
+├── CodigoCompletoFin-Math-181025-134028.txt
+├── CodigoCompletoFin-Math-181025-134314.txt
+├── configurar-status-field-v2.sh
+├── configurar-status-field-v3.sh
+├── configurar-status-field.sh
+├── converter-para-board.sh
+├── copiar_arquivos.sh
+├── pnpm-workspace.yaml
+├── README.md
+├── sac_output.csv
+├── sac_output_v2.csv
+├── teste-geral-final-v2.sh
+└── docs
+    ├── ARCHITECTURE.md
+    ├── CONTRIBUTING.md
+    ├── PROJECT-BOARD.md
+    ├── README.md
+    ├── SPRINTS_AND_HUS.md
+    ├── TESTING.md
+    ├── troubleshooting-guide.md
+    ├── adr
+    │   ├── ADR-001-decimal-js.md
+    │   └── README.md
+    ├── api
+    │   └── README.md
+    ├── archive
+    │   ├── CHECKLIST-ONDA.md
+    │   ├── 2025-10-17-sprint2-docs-detalhados
+    │   │   ├── ARQUITETURA.md
+    │   │   ├── EXEMPLOS_API.md
+    │   │   ├── README.md
+    │   │   └── RESUMO_EXECUTIVO.md
+    │   ├── 2025-10-17-sprint2-historico
+    │   │   └── README.md
+    │   └── 2025-10-17-sprint3-completed
+    │       ├── DEPENDENCIAS-E-REPLANEJAMENTO.md
+    │       └── README.md
+    ├── cet-sot
+    │   └── evidences
+    │       └── v1
+    │           ├── cenario_A_cet_basico
+    │           │   ├── cashflows.csv
+    │           │   ├── schedule.csv
+    │           │   └── summary.json
+    │           ├── cenario_B_cet_completo_seguro
+    │           │   ├── cashflows.csv
+    │           │   ├── schedule.csv
+    │           │   └── summary.json
+    │           └── cenario_C_cet_completo_prorata
+    │               ├── cashflows.csv
+    │               ├── schedule.csv
+    │               └── summary.json
+    └── sprint2
+        └── validate-docs.sh

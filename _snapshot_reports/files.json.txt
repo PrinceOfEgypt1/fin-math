@@ -1,3 +1,0 @@
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_A_cet_basico/summary.json
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_B_cet_completo_seguro/summary.json
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_C_cet_completo_prorata/summary.json
