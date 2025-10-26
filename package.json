@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
-    "@types/node": "^22.18.10",
+    "@types/express": "^4.17.24",
+    "@types/node": "^20.19.21",
     "esbuild": "^0.25.10",
     "eslint": "^9.9.0",
     "eslint-config-love": "^133.0.0",
