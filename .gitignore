@@ -91,3 +91,7 @@ plano-*/
 !scripts/*.sh
 
 !scripts/*.sh
+
+.backups_api/
+_debug_*.tgz
+
