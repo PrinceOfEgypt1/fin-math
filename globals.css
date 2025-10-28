@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   FUNDAMENTOS DE ACESSIBILIDADE
+   ============================================================================ */
+
+/* Garantir fonte base mínima de 16px */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Background com gradiente */
+body {
+  @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+  @apply text-slate-100;
+  @apply antialiased;
+  min-height: 100vh;
+}
+
+/* ============================================================================
+   FOCO VISÍVEL (CRÍTICO PARA WCAG 2.2 AA)
+   ============================================================================ */
+
+/* Remover outline padrão do browser */
+*:focus {
+  outline: none;
+}
+
+/* Foco visível para elementos interativos */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  @apply ring-2 ring-primary ring-offset-2 ring-offset-surface;
+  @apply outline-none;
+}
+
+/* Foco visível para elementos de perigo */
+button[data-variant="danger"]:focus-visible {
+  @apply ring-danger;
+}
+
+/* ============================================================================
+   COMPONENTES BASE
+   ============================================================================ */
+
+/* Botão base */
+.btn {
+  @apply min-w-touch min-h-touch;
+  @apply rounded-lg font-semibold;
+  @apply transition-all duration-200;
+  @apply focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-primary hover:bg-primary-hover;
+  @apply text-white shadow-lg shadow-primary/50;
+  @apply focus-visible:ring-primary;
+}
+
+.btn-secondary {
+  @apply bg-secondary hover:bg-secondary-hover;
+  @apply text-white shadow-lg shadow-secondary/50;
+  @apply focus-visible:ring-secondary;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary;
+  @apply hover:bg-primary hover:text-white;
+  @apply focus-visible:ring-primary;
+}
+
+/* Input base */
+.input-field {
+  @apply w-full min-h-touch px-4 py-3;
+  @apply bg-surface-elevated border-2 border-slate-700;
+  @apply text-slate-100 placeholder:text-slate-500;
+  @apply rounded-lg;
+  @apply transition-all duration-200;
+  @apply focus:border-primary focus:ring-2 focus:ring-primary/50;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.input-field:invalid {
+  @apply border-danger focus:border-danger focus:ring-danger/50;
+}
+
+/* Card base com glassmorphism */
+.card {
+  @apply bg-surface-elevated/50 backdrop-blur-lg;
+  @apply border border-slate-700/50;
+  @apply rounded-xl shadow-xl;
+  @apply transition-all duration-300;
+}
+
+.card:hover {
+  @apply border-primary/30 shadow-2xl shadow-primary/10;
+}
+
+/* ============================================================================
+   NÚMEROS TABULARES (CRITICAL)
+   ============================================================================ */
+
+/* Alinhamento tabular para números */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Aplicar a todos os números em tabelas */
+table td:has(.numeric),
+table th:has(.numeric),
+.numeric {
+  @apply tabular-nums text-right;
+}
+
+/* ============================================================================
+   TABELAS ACESSÍVEIS
+   ============================================================================ */
+
+table {
+  @apply w-full border-collapse;
+}
+
+thead {
+  @apply sticky top-0 z-10;
+  @apply bg-surface-elevated;
+}
+
+th {
+  @apply px-4 py-3;
+  @apply text-left text-sm font-semibold;
+  @apply text-slate-300 uppercase tracking-wider;
+  @apply border-b-2 border-slate-700;
+}
+
+td {
+  @apply px-4 py-3;
+  @apply text-sm text-slate-100;
+  @apply border-b border-slate-700/50;
+}
+
+/* Zebra striping */
+tbody tr:nth-child(even) {
+  @apply bg-slate-800/20;
+}
+
+/* Hover na linha */
+tbody tr:hover {
+  @apply bg-primary/10;
+}
+
+/* ============================================================================
+   ESTADOS DE LOADING
+   ============================================================================ */
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  @apply bg-slate-700/50;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================================================
+   ANIMAÇÕES SUAVES
+   ============================================================================ */
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 200ms ease-out;
+}
+
+/* ============================================================================
+   UTILITÁRIOS
+   ============================================================================ */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  @apply sr-only;
+  @apply focus:not-sr-only;
+  @apply focus:fixed focus:top-4 focus:left-4 focus:z-50;
+  @apply focus:px-6 focus:py-3;
+  @apply focus:bg-primary focus:text-white;
+  @apply focus:rounded-lg focus:shadow-lg;
+}
