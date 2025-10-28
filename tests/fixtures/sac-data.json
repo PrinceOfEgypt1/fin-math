@@ -1,0 +1,11 @@
+{
+  "basic": {
+    "pv": 10000,
+    "rate": 2.5,
+    "periods": 12,
+    "expectedFirstPMT": 1083.33,
+    "expectedLastPMT": 854.17,
+    "expectedTotal": 11362.5,
+    "expectedInterest": 1362.5
+  }
+}

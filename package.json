@@ -20,7 +20,15 @@
     "pretest": "pnpm -F @finmath/engine build",
     "fenix:plan": ".fenix/scripts/fenix-dry-run.sh --scope changed --plan .fenix/artifacts/plan.daily.md",
     "fenix:kpis": ".fenix/scripts/fenix-report.sh --from ci --kpis --out .fenix/artifacts/kpis.daily.json",
-    "fenix:openapi": "node .fenix/checks/validators/openapi_check.cjs"
+    "fenix:openapi": "node .fenix/checks/validators/openapi_check.cjs",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:firefox": "playwright test --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:report": "playwright show-report test-results/html"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
