@@ -95,3 +95,8 @@ plano-*/
 .backups_api/
 _debug_*.tgz
 
+
+# snapshots locais
+snapshot_*.part
+snapshot-*.txt
+snapshot_*.txt
