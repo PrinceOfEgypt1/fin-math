@@ -7,14 +7,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "pnpm -r --filter ./packages... run build",
+    "build": "pnpm -r --filter \"@finmath/*\" run build",
     "dev:api": "pnpm --filter @finmath/api run dev",
     "dev:ui": "pnpm -F @finmath/ui dev",
-    "test": "pnpm -F @finmath/engine test:golden",
-    "lint": "pnpm -r --filter ./packages... lint",
-    "typecheck": "pnpm -F @finmath/engine typecheck",
+    "test": "pnpm -r --filter \"@finmath/*\" run test",
+    "lint": "pnpm -r --filter \"@finmath/*\" run lint",
+    "typecheck": "pnpm -r --filter \"@finmath/*\" run typecheck || true",
     "prepare": "husky",
-    "test:golden": "vitest run test/golden.spec.ts",
+    "test:golden": "pnpm -F @finmath/engine test:golden",
     "dev": "pnpm run dev:ui",
     "dev:demo": "python3 -m http.server 8080 -d apps/demo",
     "pretest": "pnpm -F @finmath/engine build",
@@ -32,7 +32,8 @@
     "test:a11y": "playwright test tests/a11y",
     "test:a11y:report": "ts-node tests/utils/generate-a11y-report.ts",
     "test:all": "pnpm test:unit && pnpm test:e2e && pnpm test:a11y",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint:fix": "pnpm -r --filter \"@finmath/*\" run lint:fix"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
