@@ -1,0 +1,13 @@
+collections:
+  - name: guia-cet
+    sources: ["sources/guia-cet.sot.json"]
+  - name: regras-criticas
+    sources: ["sources/regras-criticas.sot.json"]
+  - name: backlog-hu
+    sources: ["sources/backlog-hu.sot.json"]
+
+  - name: finmath-docs
+    sources: ["sources/finmath-docs.sot.json"]
+
+  - name: finmath-docs-md
+    sources: ["sources/finmath-docs-md.sot.json"]

@@ -1,5 +1,6 @@
 name: Fenix Guard
 on:
+  workflow_dispatch:
   pull_request:
     branches: [ main, develop ]
 jobs:
@@ -7,6 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Collect PR labels
+        if: github.event_name == 'pull_request'
+        run: |
+          set -e
+          if [ -n "$GITHUB_EVENT_PATH" ]; then
+            PR_LABELS=$(jq -r '.pull_request.labels | map(.name) | join(",")' "$GITHUB_EVENT_PATH")
+            echo "PR_LABELS=$PR_LABELS" >> $GITHUB_ENV
+          fi
+
       - name: Fail if forbidden paths changed
         run: |
           set -e

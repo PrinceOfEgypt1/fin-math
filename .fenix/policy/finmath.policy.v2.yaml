@@ -1,0 +1,29 @@
+deny_by_default: true
+allowed_actions:
+  - open_pr
+  - update_pr_description
+  - comment_pr
+  - upload_artifact
+required_checks:
+  - lint
+  - typecheck
+  - unit
+  - property
+  - integration
+  - golden
+  - build
+  - e2e
+  - openapi
+tolerances:
+  monetario_centavos_max: "0.01"
+  taxa_pp_max_basico: "0.01"
+  taxa_pp_max_completo: "0.03"
+kpis:
+  coverage_min: 0.80
+  p95_pipeline_minutes_max: 10
+  p95_calc_ms_max: 150
+feature_flags:
+  FENIX_ENABLED: false
+golden:
+  update_requires_label: "golden:update"
+  reviewers: ["PrinceOfEgypt1"]

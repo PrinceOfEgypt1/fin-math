@@ -67,3 +67,31 @@ coverage/
 .nyc_output/
 *.lcov
 .fenix/artifacts
+.fenix/artifacts/*.json
+
+# relatórios/arquivos locais
+ANALISE-*.md
+analise-*.sh
+
+# relatórios/arquivos locais
+ANALISE-*.md
+analise-*.sh
+
+# meus rascunhos locais\ nplano-*.sh
+plano-*/
+
+# meus rascunhos locais (corrigido)
+plano-*.sh
+plano-*/
+
+# Fênix RAG cache
+.fenix/rag/cache/
+
+
+!scripts/*.sh
+
+!scripts/*.sh
+
+.backups_api/
+_debug_*.tgz
+

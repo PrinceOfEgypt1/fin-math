@@ -19,7 +19,7 @@ export async function postValidateSchedule(
 
     // Retornar resultado
     return reply.status(200).send(result);
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof Error) {
       return reply.status(400).send({
         error: "Validation error",
