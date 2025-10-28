@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ExplainPanel } from "../components/ExplainPanel";
 
 function toFixed2(n: number) {

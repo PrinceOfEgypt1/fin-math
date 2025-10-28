@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PriceScreen } from "./PriceScreen";
 import { SacScreen } from "./SacScreen";
 import { SimulatorsScreen } from "./SimulatorsScreen";
