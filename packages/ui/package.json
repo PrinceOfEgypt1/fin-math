@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "decimal.js": "^10.4.3",
+    "finmath-engine": "^0.4.1",
     "framer-motion": "^12.23.24",
-    "lucide-react": "^0.545.0",
+    "lucide-react": "0.460.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^3.2.1",
-    "tailwind-merge": "^3.3.1",
-    "finmath-engine": "^0.4.1",
-    "decimal.js": "^10.4.3"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
