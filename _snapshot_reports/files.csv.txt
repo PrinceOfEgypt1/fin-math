@@ -1,8 +1,0 @@
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_A_cet_basico/cashflows.csv
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_A_cet_basico/schedule.csv
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_B_cet_completo_seguro/cashflows.csv
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_B_cet_completo_seguro/schedule.csv
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_C_cet_completo_prorata/cashflows.csv
-/home/moses/workspace/fin-math/docs/cet-sot/evidences/v1/cenario_C_cet_completo_prorata/schedule.csv
-/home/moses/workspace/fin-math/sac_output.csv
-/home/moses/workspace/fin-math/sac_output_v2.csv

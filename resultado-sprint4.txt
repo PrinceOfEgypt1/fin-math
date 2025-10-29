@@ -1,0 +1,414 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║              VERIFICAÇÃO SPRINT 4 - FINMATH                              ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📁 1. ESTRUTURA GERAL DO PROJETO
+─────────────────────────────────────────────────────────────────────────
+.
+├── 00_executar_sprint3.sh
+├── 00_validacao_completa.sh
+├── 01_bootstrap_fenix.sh
+├── 01_limpar_ambiente.sh
+├── 02_corrigir_branch.sh
+├── 02_seed_fenix_files.sh
+├── 03_adicionar_rotas_server.sh
+├── 04_validar_antes_commit.sh
+├── 06_fenix_patch_forbidden_guard_v2.sh
+├── 07_fenix_infra_pr_local_test.sh
+├── 08_fenix_mark_pr_infra.sh
+├── 09_fenix_combo_infra.sh
+├── 10_fenix_open_and_label_pr.sh
+├── 11_fenix_branch_protection_main.sh
+├── 12_fenix_watch_ci.sh
+├── 13_fenix_merge_current_pr.sh
+├── 14_fenix_pr_approve_and_merge.sh
+├── 15_fenix_enable_repo_auto_merge.sh
+├── 16_fenix_show_branch_protection.sh
+├── 18_relax_protection_for_bootstrap.sh
+├── 19_merge_or_auto_current_pr.sh
+├── 21_git_safe_checkout_main.sh
+├── 23_watch_auto_merge.sh
+├── 24_watch_pr_by_number.sh
+├── 25_finalize_after_merge.sh
+├── 26_unstash_last.sh
+├── 27_inspect_pr_blockers.sh
+├── 28_enable_dispatch_and_trigger_fenix_ci.sh
+├── 28_temp_require_only_guard.sh
+├── 29_resolve_stash_conflicts_keep_main.sh
+├── 31_checkout_pr_branch_clean.sh
+├── 32_trigger_fenix_ext_on_branch.sh
+├── 33_reduce_checks_wait_merge_restore.sh
+├── 34_remove_embedded_repo.sh
+├── 35_fenix_automerge_now.sh
+├── 38_fenix_ci_green_bootstrap.sh
+├── 39_fenix_smoke.sh
+├── 40_fenix_assert_install.sh
+├── 41_merge_now_or_diagnose.sh
+├── 44_debug_merge_blockers.sh
+├── 45_guard_dispatch_and_merge.sh
+├── 46_guard_merge_compat.sh
+├── 47_force_merge_with_protection_roundtrip.sh
+├── 48_sync_main_via_pr.sh
+├── 50_stop_tracking_artifacts_via_pr.sh
+├── 51_show_divergence.sh
+├── 51_wait_and_merge_37.sh
+├── 52_main_reset_to_remote.sh
+├── 54_post_sync_housekeeping.sh
+├── 56_verify_fenix_local.sh
+├── 57_finish_gitignore_pr_and_sync.sh
+├── 57_push_gitignore_via_pr.sh
+├── 60_ingest_docs_to_rag.sh
+├── 61_enable_policies_and_checks.sh
+├── 61_verify_policy_patch.sh
+├── 62_patch_system_playbooks.sh
+├── 63_fenix_smoke_local.sh
+├── 64_commit_pr_playbooks.sh
+├── 66_finish_pr41_and_cleanup.sh
+├── 70_wire_docs_to_fenix.sh
+├── 71_push_rag_docs_via_pr.sh
+├── 72_extract_docx_to_md.sh
+├── 96_desfazer_merge_local.sh
+├── 97_push_via_pr_sprint3.sh
+├── 98_finalizar_push_sprint3.sh
+├── 99_validacao_final_corrigida.sh
+├── 99_validacao_final_sprint3.sh
+├── ANALISE-E-PROXIMOS-PASSOS-20251025-012327.md
+├── ANALISE-E-PROXIMOS-PASSOS-20251025-013416.md
+├── ANALISE-PROGRESSO-20251025-014527.md
+├── Button_A11y.tsx
+├── CHANGELOG.md
+├── Input_A11y.tsx
+├── LICENSE
+├── README.md
+├── SkipLink.tsx
+├── _snapshot_reports
+│   ├── dirs.all.txt
+│   ├── ext.count.txt
+│   ├── files.csv.txt
+│   ├── files.json.txt
+│   ├── files.pdf.txt
+│   ├── lines_per_file.tsv
+│   ├── paths.all.txt
+│   ├── sha256.txt
+│   ├── todos.sample.txt
+│   ├── tree.txt
+│   └── wc.txt
+├── analise-finmath-v2.sh
+├── analise-progresso-finmath.sh
+├── api
+│   └── openapi.yaml
+├── apps
+│   └── demo
+├── docs
+│   ├── ARCHITECTURE.md
+│   ├── README.md
+│   ├── TESTING.md
+│   ├── a11y
+│   └── archive
+├── eslint.config.js
+├── finmath_strict_prune.sh
+├── force_merge_and_finish.sh
+├── globals.css
+├── package.json
+├── packages
+│   ├── api
+│   ├── engine
+│   └── ui
+├── plano-desenvolvimento-sprint3-v2.sh
+├── plano-sprint3-20251025-024610
+│   ├── README.md
+│   ├── docs
+│   ├── golden-files
+│   ├── scripts
+│   └── tests
+├── plano-sprint3-20251025-025322
+│   ├── README.md
+│   ├── docs
+│   ├── golden-files
+│   ├── scripts
+│   └── tests
+├── playwright.config.ts
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── price_output.pdf
+├── resultado-sprint4.txt
+├── run-debug.log
+├── sac_output.csv
+├── sac_output.pdf
+├── sac_output_v2.csv
+├── scripts
+│   └── 95_pos_merge_github.sh
+├── sprint4_finalizacao.sh
+├── sprint4_inicio.sh
+├── sprint4_part1_a11y.sh
+├── sprint4_part2_e2e.sh
+├── sprint4_part3_a11y_audit.sh
+├── tailwind.config.js
+├── tests
+│   ├── a11y
+│   ├── e2e
+│   ├── fixtures
+│   ├── integration
+│   ├── unit
+│   └── utils
+├── tools
+│   ├── board-management
+│   └── scripts
+├── tsconfig.base.json
+├── verificar-sprint4.sh
+├── verify_code_sync.sh
+└── verify_out.log
+
+33 directories, 121 files
+
+✅ 2. ACESSIBILIDADE - ITENS COMPLETOS (60%)
+─────────────────────────────────────────────────────────────────────────
+2.1. Design System A11y
+   ❌ docs/design-system/ NÃO encontrado
+
+2.2. Tokens Semânticos (Tailwind)
+   ✅ tailwind.config.js existe
+   Buscando tokens semânticos (--surface, --text):
+
+2.3. Foco Visível (CSS)
+   ✅ Arquivo de estilos existe
+   Buscando :focus-visible:
+packages/ui/src/styles/globals.css:  :focus-visible {
+
+2.4. Navegação por Teclado (Componentes)
+   ✅ Diretório de componentes existe
+   Componentes principais:
+1
+packages/ui/src/components/ExplainPanel.tsx
+
+2.5. ARIA Labels (ExplainPanel)
+   ✅ ExplainPanel.tsx existe
+   Buscando aria- attributes:
+
+❌ 3. TESTES E2E - ITENS PENDENTES (0%)
+─────────────────────────────────────────────────────────────────────────
+3.1. Configuração Playwright
+   ✅ playwright.config.ts EXISTE
+import { defineConfig, devices } from "@playwright/test";
+
+/**
+ * Configuração Playwright para FinMath
+ *
+ * Testes E2E com:
+ * - Múltiplos browsers (Chromium, Firefox, WebKit)
+ * - Viewport responsivo
+ * - Screenshots e vídeos em falhas
+ * - Relatórios HTML
+ * - Paralelização
+ */
+export default defineConfig({
+  testDir: "./tests/e2e",
+
+  /* Timeout por teste */
+  timeout: 30 * 1000,
+
+  /* Configurações globais */
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+
+  /* Reporter */
+  reporter: [
+    ["html", { outputFolder: "test-results/html" }],
+    ["json", { outputFile: "test-results/results.json" }],
+    ["junit", { outputFile: "test-results/junit.xml" }],
+    ["list"],
+  ],
+
+  /* Configurações compartilhadas */
+  use: {
+    /* URL base */
+    baseURL: "http://localhost:5173",
+
+    /* Coletar traces em falhas */
+    trace: "on-first-retry",
+
+    /* Screenshots */
+    screenshot: "only-on-failure",
+
+    /* Vídeo */
+    video: "retain-on-failure",
+
+    /* Timeout de ação */
+    actionTimeout: 10 * 1000,
+
+    /* Timeout de navegação */
+    navigationTimeout: 15 * 1000,
+  },
+
+  /* Configurar servidor local */
+  webServer: {
+    command: "pnpm dev",
+    url: "http://localhost:5173",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+  },
+
+  /* Projetos - Browsers diferentes */
+  projects: [
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+
+    {
+      name: "firefox",
+      use: {
+        ...devices["Desktop Firefox"],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+
+    {
+      name: "webkit",
+      use: {
+        ...devices["Desktop Safari"],
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+
+    /* Mobile viewports */
+    {
+      name: "mobile-chrome",
+      use: { ...devices["Pixel 5"] },
+    },
+    {
+      name: "mobile-safari",
+      use: { ...devices["iPhone 12"] },
+    },
+
+    /* Tablet */
+    {
+      name: "tablet",
+      use: {
+        ...devices["iPad Pro"],
+        viewport: { width: 1024, height: 1366 },
+      },
+    },
+  ],
+});
+
+3.2. Diretório de Testes E2E
+   ✅ Diretório E2E EXISTE
+   Arquivos de teste:
+./tests/e2e/sac-flow.spec.ts
+./tests/e2e/cet-flow.spec.ts
+./tests/e2e/export-flow.spec.ts
+./tests/e2e/price-flow.spec.ts
+./tests/e2e/validator-flow.spec.ts
+./packages/ui/test/e2e/comparison.spec.ts
+
+3.3. Testes de Acessibilidade (axe-core)
+   ✅ Diretório A11y EXISTE
+./tests/a11y/accessibility.spec.ts
+
+3.4. Dependências Playwright
+   Verificando package.json:
+   ✅ Playwright está nas dependências
+package.json:    "test:e2e": "playwright test",
+package.json:    "test:e2e:headed": "playwright test --headed",
+package.json:    "test:e2e:ui": "playwright test --ui",
+package.json:    "test:e2e:debug": "playwright test --debug",
+package.json:    "test:e2e:chromium": "playwright test --project=chromium",
+package.json:    "test:e2e:firefox": "playwright test --project=firefox",
+package.json:    "test:e2e:webkit": "playwright test --project=webkit",
+package.json:    "test:report": "playwright show-report test-results/html",
+package.json:    "test:a11y": "playwright test tests/a11y",
+package.json:    "@axe-core/playwright": "^4.11.0",
+package.json:    "@playwright/test": "^1.56.1",
+package.json:    "axe-playwright": "^2.2.2",
+
+3.5. Dependências axe-core
+   ✅ axe-core está nas dependências
+package.json:    "@axe-core/playwright": "^4.11.0",
+package.json:    "axe-core": "^4.11.0",
+
+🔄 4. INTEGRAÇÃO CI/CD
+─────────────────────────────────────────────────────────────────────────
+   ✅ CI workflow existe
+   Buscando jobs de E2E:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+--
+        run: pnpm test:e2e --project=${{ matrix.browser }}
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: test-results/
+          retention-days: 30
+
+  # Job 4: Accessibility Tests
+--
+    needs: [build, e2e-tests, a11y-tests]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      
+
+📦 5. SCRIPTS DE TESTE
+─────────────────────────────────────────────────────────────────────────
+   Scripts disponíveis:
+    "test": "pnpm -r --filter \"@finmath/*\" run test",
+    "test:golden": "pnpm -F @finmath/engine test:golden",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "test:e2e:firefox": "playwright test --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:report": "playwright show-report test-results/html",
+
+   ✅ Script test:e2e EXISTE
+   ✅ Script test:a11y EXISTE
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║                           RESUMO FINAL                                   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📊 STATUS DA SPRINT 4 SEGUNDO O EXCEL:
+   ✅ Acessibilidade (Design, Tokens, Foco, ARIA): 5/5 (100%)
+   ❌ Testes E2E: 0/14 (0%)
+   ⚠️  TOTAL: 5/19 (60%)
+
+🎯 PRÓXIMOS PASSOS PARA COMPLETAR 100%:
+   1. Instalar Playwright: pnpm add -D @playwright/test
+   2. Instalar axe-core: pnpm add -D @axe-core/playwright
+   3. Criar playwright.config.ts
+   4. Criar diretório test/e2e/
+   5. Implementar 15 testes E2E
+   6. Criar diretório test/a11y/
+   7. Implementar testes de acessibilidade
+   8. Adicionar E2E ao CI (.github/workflows/ci.yml)
+   9. Gerar relatório de acessibilidade
+  10. Executar testes cross-browser
+
+⏱️  ESTIMATIVA PARA CONCLUSÃO: 4-6 horas
+

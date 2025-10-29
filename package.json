@@ -28,7 +28,7 @@
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:firefox": "playwright test --project=firefox",
     "test:e2e:webkit": "playwright test --project=webkit",
-    "test:report": "playwright show-report test-results/html",
+    "test:report": "playwright show-report playwright-report",
     "test:a11y": "playwright test tests/a11y",
     "test:a11y:report": "ts-node tests/utils/generate-a11y-report.ts",
     "test:all": "pnpm test:unit && pnpm test:e2e && pnpm test:a11y",

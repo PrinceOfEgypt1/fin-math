@@ -1,8 +1,0 @@
-name: inicio-sprint
-steps:
-  - id: sync
-    run: "git fetch --all --prune && git status"
-  - id: checks
-    run: ".fenix/scripts/fenix-dry-run.sh --scope all --plan .fenix/artifacts/plan.inicio-sprint.md"
-  - id: announce
-    run: ".fenix/scripts/fenix-report.sh --from dry-run --kpis --out .fenix/artifacts/kpis.inicio.json"
