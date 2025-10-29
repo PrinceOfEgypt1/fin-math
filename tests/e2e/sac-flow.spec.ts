@@ -5,7 +5,7 @@ import {
   validateScheduleTable,
   measurePerformance,
 } from "../utils/helpers";
-import sacData from "../fixtures/sac-data.json";
+import sacData from "../fixtures/sac-data.json" with { type: "json" };
 
 test.describe("SAC Flow - Sistema de Amortização Constante", () => {
   test.beforeEach(async ({ page }) => {

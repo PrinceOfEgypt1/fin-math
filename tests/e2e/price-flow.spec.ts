@@ -7,7 +7,7 @@ import {
   checkBasicA11y,
   measurePerformance,
 } from "../utils/helpers";
-import priceData from "../fixtures/price-data.json";
+import priceData from "../fixtures/price-data.json" with { type: "json" };
 
 test.describe("Price Flow - Sistema de Amortização Price", () => {
   test.beforeEach(async ({ page }) => {

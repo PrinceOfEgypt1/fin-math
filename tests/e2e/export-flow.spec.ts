@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { fillPriceForm } from "../utils/helpers";
-import priceData from "../fixtures/price-data.json";
+import priceData from "../fixtures/price-data.json" with { type: "json" };
 
 test.describe("Export Flow - Exportações", () => {
   test.beforeEach(async ({ page }) => {
