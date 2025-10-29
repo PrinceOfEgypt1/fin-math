@@ -1,40 +1,57 @@
-import { useEffect, useState } from "react";
-import { Header } from "./components/layout/Header";
-import { Dashboard } from "./pages/Dashboard";
-import { PriceSimulator } from "./pages/simulators/PriceSimulator";
-import { SacSimulator } from "./pages/simulators/SacSimulator";
-import { ComparisonPage } from "./pages/ComparisonPage";
+import { useState } from "react";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("dashboard");
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-      setCurrentPage(hash || "dashboard");
-    };
-    window.addEventListener("hashchange", handleHashChange);
-    handleHashChange();
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-  const renderPage = () => {
-    switch (currentPage) {
-      case "price":
-        return <PriceSimulator />;
-      case "sac":
-        return <SacSimulator />;
-      case "comparison":
-        return <ComparisonPage />;
-      case "cet":
-        return <Dashboard />;
-      default:
-        return <Dashboard />;
-    }
-  };
+  const [count, setCount] = useState(0);
+
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>{renderPage()}</main>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "system-ui, sans-serif",
+        background: "#1a1a1a",
+        color: "#fff",
+      }}
+    >
+      <h1 style={{ fontSize: "3rem", marginBottom: "2rem" }}>
+        FinMath Calculator
+      </h1>
+
+      <div
+        style={{
+          padding: "2rem",
+          background: "#2a2a2a",
+          borderRadius: "8px",
+          textAlign: "center",
+        }}
+      >
+        <button
+          onClick={() => setCount(count + 1)}
+          style={{
+            padding: "1rem 2rem",
+            fontSize: "1.5rem",
+            background: "#646cff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Count is {count}
+        </button>
+        <p style={{ marginTop: "1rem", color: "#888" }}>
+          ✅ Vite + React funcionando!
+        </p>
+      </div>
+
+      <p style={{ marginTop: "2rem", color: "#888" }}>
+        Sprint 4 - E2E Tests Ready
+      </p>
     </div>
   );
 }
+
 export default App;

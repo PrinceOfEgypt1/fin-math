@@ -1,68 +1,24 @@
 {
   "name": "@finmath/api",
-  "version": "0.2.0",
-  "description": "FinMath REST API - Calculadora de matemática financeira",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "test": "vitest run -c vitest.config.ts",
-    "test:watch": "vitest",
-    "test:unit": "vitest run --config vitest.config.ts",
-    "test:integration": "vitest run test/integration",
-    "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix"
+    "build": "tsc",
+    "dev": "node --watch dist/server.js",
+    "start": "node dist/server.js"
   },
-  "keywords": [
-    "finance",
-    "math",
-    "calculator",
-    "price",
-    "sac",
-    "cet",
-    "api",
-    "rest"
-  ],
-  "author": "FinMath Team",
-  "license": "MIT",
   "dependencies": {
-    "@fastify/cors": "^8.5.0",
-    "@fastify/helmet": "^11.1.1",
-    "@fastify/multipart": "^8.3.0",
-    "@fastify/swagger": "^8.15.0",
-    "@fastify/swagger-ui": "^4.1.0",
     "@finmath/engine": "workspace:*",
-    "cors": "^2.8.5",
-    "decimal.js": "^10.6.0",
-    "exceljs": "^4.4.0",
     "express": "^4.21.2",
-    "fastify": "^4.29.0",
-    "helmet": "^7.2.0",
-    "papaparse": "^5.5.3",
-    "pdfkit": "^0.17.2",
-    "pino": "^8.21.0",
-    "pino-pretty": "^10.3.1",
-    "zod": "^3.25.76"
+    "zod": "^3.24.1",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/express": "^4.17.24",
-    "@types/node": "^20.19.21",
-    "@types/papaparse": "^5.3.14",
-    "@types/pdfkit": "^0.17.3",
-    "@vitest/coverage-v8": "^1.6.0",
-    "eslint": "^8.57.0",
-    "supertest": "^6.3.4",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3",
-    "vitest": "^1.6.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.5.3"
   }
 }

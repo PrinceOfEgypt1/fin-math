@@ -1,45 +1,29 @@
 {
   "name": "@finmath/ui",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "description": "Interface moderna para cálculos de matemática financeira - FinMath",
-  "keywords": [
-    "finmath",
-    "matemática-financeira",
-    "calculadora",
-    "price",
-    "sac",
-    "cet"
-  ],
-  "author": "FinMath Team",
-  "license": "MIT",
-  "packageManager": "pnpm@10.18.3",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit",
-    "type-check": "tsc --noEmit"
+    "lint": "eslint . --ext ts,tsx"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.24",
-    "lucide-react": "^0.545.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "recharts": "^3.2.1",
-    "tailwind-merge": "^3.3.1",
-    "finmath-engine": "^0.4.1",
-    "decimal.js": "^10.4.3"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@finmath/engine": "workspace:*",
+    "recharts": "^2.12.7",
+    "lucide-react": "^0.263.1"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.0.4",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.18",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.2",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35"
   }
 }

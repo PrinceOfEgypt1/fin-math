@@ -1,0 +1,26 @@
+{
+  "basic": {
+    "pv": 10000,
+    "rate": 2.5,
+    "periods": 12,
+    "expectedPMT": 946.56,
+    "expectedTotal": 11358.72,
+    "expectedInterest": 1358.72
+  },
+  "longTerm": {
+    "pv": 250000,
+    "rate": 0.85,
+    "periods": 360,
+    "expectedPMT": 2247.86,
+    "expectedTotal": 809229.6,
+    "expectedInterest": 559229.6
+  },
+  "shortTerm": {
+    "pv": 5000,
+    "rate": 3.0,
+    "periods": 6,
+    "expectedPMT": 883.89,
+    "expectedTotal": 5303.34,
+    "expectedInterest": 303.34
+  }
+}
