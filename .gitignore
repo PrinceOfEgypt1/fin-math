@@ -100,3 +100,6 @@ _debug_*.tgz
 snapshot_*.part
 snapshot-*.txt
 snapshot_*.txt
+
+playwright-report/
+test-results/
