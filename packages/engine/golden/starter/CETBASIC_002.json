@@ -1,0 +1,18 @@
+{
+  "test_id": "CETBASIC_002",
+  "stage": "S3",
+  "description": "CET básico — PV 5000.00, PMT 900.00, n=6, tarifas t0=['0.00']",
+  "inputs": {
+    "pv": "5000.00",
+    "pmt": "900.00",
+    "n": 6,
+    "feesT0": ["0.00"],
+    "baseAnnual": 12,
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "irrMonthly": 0.022442,
+    "cetAnnual": 0.305164
+  },
+  "tolerance": 0.0001
+}

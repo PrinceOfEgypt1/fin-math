@@ -1,0 +1,24 @@
+{
+  "id": "PRICE_002",
+  "description": "PRICE - 24 meses",
+  "motorVersion": "0.4.0",
+  "input": {
+    "pv": "50000.00",
+    "annualRate": "0.15",
+    "n": 24
+  },
+  "expected": {
+    "pmt": "2424.33",
+    "schedule": {
+      "rows": 24,
+      "lastPayment": {
+        "period": 24,
+        "balance": 0.0
+      }
+    }
+  },
+  "tolerance": {
+    "pmt": 0.01,
+    "balance": 0.01
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "GF Starter Pack v1",
+  "about": "30 Golden Files iniciais (S1:10, S2:10, S3:10). Valores monetários em 2 casas (Half-Up); taxas em 6 casas.",
+  "motorVersion": "0.1.0",
+  "distribution": {
+    "S1": 10,
+    "S2": 10,
+    "S3": 10
+  },
+  "schema_hint": "{test_id, stage, description, inputs, expected, tolerance}",
+  "notes": [
+    "S3 inclui CET básico; CET completo coberto nos Cenários Gabaritados.",
+    "IRR por bissecção; tolerância 1e-4 em taxa."
+  ],
+  "files": [
+    "JC_001.json",
+    "JC_002.json",
+    "JC_003.json",
+    "EQ_001.json",
+    "EQ_002.json",
+    "EQ_003.json",
+    "SER_001.json",
+    "SER_002.json",
+    "SER_003.json",
+    "SER_004.json",
+    "PRICE_001.json",
+    "PRICE_002.json",
+    "PRICE_003.json",
+    "PRICE_004.json",
+    "PRICE_005.json",
+    "SAC_001.json",
+    "SAC_002.json",
+    "SAC_003.json",
+    "SAC_004.json",
+    "SAC_005.json",
+    "NPVIRR_001.json",
+    "NPVIRR_002.json",
+    "NPVIRR_003.json",
+    "NPVIRR_004.json",
+    "NPVIRR_005.json",
+    "CETBASIC_001.json",
+    "CETBASIC_002.json",
+    "CETBASIC_003.json",
+    "CETBASIC_004.json",
+    "CETBASIC_005.json"
+  ]
+}
