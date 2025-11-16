@@ -1,0 +1,119 @@
+═══════════════════════════════════════════════════════════════
+  🚀 INSTRUÇÕES RÁPIDAS - Setup FinMath no WSL/Ubuntu
+═══════════════════════════════════════════════════════════════
+
+Para: moses@MOSES-SERVER
+Ambiente: WSL/Ubuntu
+Objetivo: Configurar ambiente de desenvolvimento do projeto FinMath
+
+═══════════════════════════════════════════════════════════════
+  OPÇÃO 1: Setup Automático (Recomendado)
+═══════════════════════════════════════════════════════════════
+
+No seu terminal WSL (moses@MOSES-SERVER), execute:
+
+    cd ~/workspace
+    git clone https://github.com/PrinceOfEgypt1/fin-math.git
+    cd fin-math
+    bash setup-wsl.sh
+
+O script irá automaticamente:
+  ✓ Verificar Node.js, pnpm e Git
+  ✓ Instalar dependências
+  ✓ Compilar o projeto
+  ✓ Executar testes de validação
+
+Tempo estimado: 2-3 minutos
+
+═══════════════════════════════════════════════════════════════
+  OPÇÃO 2: Setup Manual
+═══════════════════════════════════════════════════════════════
+
+1. Clonar repositório:
+   cd ~/workspace
+   git clone https://github.com/PrinceOfEgypt1/fin-math.git
+   cd fin-math
+
+2. Verificar ferramentas:
+   node --version    # Precisa v18+ (recomendado v20+)
+   pnpm --version    # Precisa 10.19.0
+   git --version     # Precisa 2.0+
+
+3. Instalar pnpm (se necessário):
+   npm install -g pnpm@10.19.0
+
+4. Instalar dependências:
+   pnpm install
+
+5. Compilar projeto:
+   pnpm build
+
+6. Validar instalação:
+   pnpm -F @finmath/engine test
+
+═══════════════════════════════════════════════════════════════
+  Comandos Úteis Após Instalação
+═══════════════════════════════════════════════════════════════
+
+Desenvolvimento:
+  pnpm dev          → Inicia UI em http://localhost:5173
+  pnpm dev:api      → Inicia API em http://localhost:3000
+
+Testes:
+  pnpm test         → Executar todos os testes
+  pnpm test:golden  → Executar Golden Files (validação)
+
+Build:
+  pnpm build        → Compilar todos os pacotes
+
+Qualidade:
+  pnpm lint         → Verificar code style
+  pnpm typecheck    → Verificar tipos TypeScript
+
+═══════════════════════════════════════════════════════════════
+  Estrutura do Projeto
+═══════════════════════════════════════════════════════════════
+
+~/workspace/fin-math/
+├── packages/
+│   ├── engine/     → Motor de cálculo (TypeScript)
+│   ├── api/        → REST API (Fastify)
+│   └── ui/         → Interface React
+├── .fenix/         → Sistema de governança
+└── tests/          → Testes E2E e A11y
+
+═══════════════════════════════════════════════════════════════
+  Troubleshooting
+═══════════════════════════════════════════════════════════════
+
+❌ Erro: "Cannot find module '@finmath/engine'"
+   → Solução: pnpm -F @finmath/engine build
+
+❌ Erro: "Command failed"
+   → Solução: rm -rf node_modules pnpm-lock.yaml
+              pnpm install && pnpm build
+
+❌ Erro de permissões
+   → Solução: sudo chown -R $USER:$USER ~/workspace/fin-math
+
+═══════════════════════════════════════════════════════════════
+  Documentação Completa
+═══════════════════════════════════════════════════════════════
+
+Leia SETUP_WSL.md para instruções detalhadas e troubleshooting.
+
+═══════════════════════════════════════════════════════════════
+  Links
+═══════════════════════════════════════════════════════════════
+
+GitHub:  https://github.com/PrinceOfEgypt1/fin-math
+Issues:  https://github.com/PrinceOfEgypt1/fin-math/issues
+Board:   https://github.com/users/PrinceOfEgypt1/projects/3
+
+═══════════════════════════════════════════════════════════════
+
+Última atualização: 2025-11-16
+Versão: 0.4.0
+Status: ✅ Ambiente validado e funcional
+
+═══════════════════════════════════════════════════════════════
