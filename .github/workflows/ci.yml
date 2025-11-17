@@ -92,29 +92,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-      
+
       - name: Install pnpm
         run: npm install -g pnpm@10.18.3
-      
+
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      
+
+      - name: Build UI
+        run: pnpm -F @finmath/ui build
+
+      - name: Start dev server
+        run: |
+          pnpm -F @finmath/ui preview &
+          sleep 5
+
       - name: Run accessibility tests
-        run: pnpm test:a11y || npx playwright test tests/a11y
-      
+        run: pnpm test:a11y
+
       - name: Generate A11y Report
         if: always()
-        run: npx ts-node tests/utils/generate-a11y-report.ts
-      
+        run: |
+          pnpm -F @finmath/ui preview &
+          sleep 5
+          pnpm test:a11y:report
+
       - name: Upload A11y Report
         if: always()
         uses: actions/upload-artifact@v4

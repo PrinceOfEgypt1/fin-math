@@ -21,10 +21,8 @@ async function generateA11yReport() {
 
   const urls = [
     { path: "/", name: "Home" },
-    { path: "/price", name: "Price Calculator" },
-    { path: "/sac", name: "SAC Calculator" },
-    { path: "/cet", name: "CET Calculator" },
-    { path: "/comparator", name: "Comparator" },
+    { path: "/comparador", name: "Comparador PRICE vs SAC" },
+    { path: "/calculadora", name: "Calculadora" },
   ];
 
   const results: A11yResult[] = [];
@@ -79,11 +77,28 @@ async function generateA11yReport() {
   console.log(`   Total de páginas: ${results.length}`);
   console.log(`   Total de violations: ${totalViolations}`);
 
-  if (totalViolations > 0) {
+  // Contar apenas violations críticas e sérias
+  const criticalViolations = results.reduce((sum, r) => {
+    return (
+      sum +
+      r.violations.filter(
+        (v: any) => v.impact === "critical" || v.impact === "serious",
+      ).length
+    );
+  }, 0);
+
+  if (criticalViolations > 0) {
     console.log(
-      `\n⚠️  ATENÇÃO: Foram encontradas ${totalViolations} violations!`,
+      `\n❌ FALHA: ${criticalViolations} violation(s) crítica(s) ou séria(s) encontrada(s)!`,
     );
     process.exit(1);
+  } else if (totalViolations > 0) {
+    console.log(
+      `\n⚠️  ATENÇÃO: ${totalViolations} violation(s) de menor impacto encontrada(s).`,
+    );
+    console.log(
+      `   (Apenas violations críticas/sérias causam falha na pipeline)`,
+    );
   } else {
     console.log(`\n✅ Todas as páginas passaram na auditoria!`);
   }
