@@ -144,10 +144,10 @@ fin-math/
 
 ## 📚 Documentação
 
-- [Arquitetura](docs/ARCHITECTURE.md)
-- [Guia de Testes](docs/TESTING.md)
-- [Relatório de Validação](VALIDATION-REPORT-FINAL.md)
-- [Contribuindo](docs/CONTRIBUTING.md)
+- [📐 Arquitetura do FinMath](docs/ARCHITECTURE.md) - Visão completa da arquitetura e fluxo de dados
+- [🧮 Guia de Uso do Engine](docs/ENGINE-USAGE.md) - Exemplos práticos para desenvolvedores
+- [♿ Guia de Acessibilidade](docs/A11Y-GUIDE.md) - Checklist e padrões WCAG 2.1 AA
+- [✅ Relatório de Validação](VALIDATION-REPORT-FINAL.md) - Evidências de qualidade
 
 ## 🏆 Sprints Completas
 
@@ -155,7 +155,7 @@ fin-math/
 - ✅ **Sprint 1:** Motor Básico
 - ✅ **Sprint 2:** Amortizações + CET Básico
 - ✅ **Sprint 3:** NPV/IRR + CET Completo
-- ⚠️ **Sprint 4:** Acessibilidade (60%)
+- ✅ **Sprint 4:** Acessibilidade + Documentação (100%)
 
 ## 🔗 Links
 

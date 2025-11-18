@@ -23,8 +23,7 @@ async function generateA11yReport() {
     { path: "/", name: "Home" },
     { path: "/price", name: "Price Calculator" },
     { path: "/sac", name: "SAC Calculator" },
-    { path: "/cet", name: "CET Calculator" },
-    { path: "/comparator", name: "Comparator" },
+    { path: "/comparator", name: "Comparator PRICE vs SAC" },
   ];
 
   const results: A11yResult[] = [];
@@ -55,7 +54,7 @@ async function generateA11yReport() {
   await browser.close();
 
   // Salvar resultados
-  const outputDir = path.join(__dirname, "../../docs/a11y");
+  const outputDir = path.join(__dirname, "../../reports/a11y");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }

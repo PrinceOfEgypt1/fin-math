@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -19,4 +23,58 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+/* Acessibilidade: indicador de foco visível (WCAG 2.1 AA) */
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Screen reader only - oculta visualmente mas mantém acessível */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Screen reader only mas visível ao receber foco */
+.sr-only:focus,
+.sr-only:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Estilos para skip link */
+a[href="#main-content"] {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  z-index: 100;
+  transition: top 0.2s;
+}
+
+a[href="#main-content"]:focus {
+  top: 0;
+}
+
+/* Garantir que main possa receber foco programaticamente */
+main:focus {
+  outline: none;
 }
