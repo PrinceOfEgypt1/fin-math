@@ -1,4 +1,4 @@
-import { chromium, Browser, Page } from "@playwright/test";
+import { chromium, type Browser, type Page } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import * as fs from "fs";
 import * as path from "path";
@@ -11,6 +11,9 @@ interface A11yResult {
   incomplete: number;
   inapplicable: number;
 }
+
+// URL base do servidor (pode ser sobrescrita via variável de ambiente)
+const BASE_URL = process.env.BASE_URL || "http://localhost:5173";
 
 /**
  * Gera relatório de acessibilidade para todas as páginas
@@ -31,7 +34,7 @@ async function generateA11yReport() {
   for (const { path: urlPath, name } of urls) {
     console.log(`🔍 Auditando: ${name} (${urlPath})`);
 
-    await page.goto(`http://localhost:5173${urlPath}`);
+    await page.goto(`${BASE_URL}${urlPath}`);
 
     const accessibilityResults = await new AxeBuilder(page)
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
