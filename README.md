@@ -98,6 +98,8 @@ const cet = calculateCET({
 
 ## 🧪 Testes
 
+### Testes Unitários
+
 ```bash
 # Todos os testes
 pnpm -F @finmath/engine test
@@ -111,6 +113,40 @@ pnpm -F @finmath/engine test:coverage
 # Validação completa
 ./validate-sprint4.sh
 ```
+
+### Testes E2E (Playwright)
+
+```bash
+# Todos os testes E2E
+pnpm test:e2e
+
+# Com interface visual
+pnpm test:e2e:ui
+
+# Com navegador visível
+pnpm test:e2e:headed
+
+# Modo debug
+pnpm test:e2e:debug
+```
+
+### Testes de Acessibilidade
+
+**IMPORTANTE:** Inicie o servidor antes de rodar os testes de acessibilidade!
+
+```bash
+# Terminal 1: Iniciar servidor dev
+pnpm -F @finmath/ui dev
+
+# Terminal 2: Rodar testes de acessibilidade
+# Se o servidor estiver na porta padrão (5173):
+pnpm test:a11y:report
+
+# Se o servidor estiver em outra porta (ex: 5174):
+BASE_URL=http://localhost:5174 pnpm test:a11y:report
+```
+
+Os relatórios são gerados em `docs/a11y/`.
 
 ## 📊 Qualidade
 

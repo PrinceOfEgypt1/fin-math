@@ -16,8 +16,31 @@ interface A11yResult {
  * Gera relatório de acessibilidade para todas as páginas
  */
 async function generateA11yReport() {
+  // Configuração da URL base (pode ser sobrescrita via BASE_URL env var)
+  const baseUrl = process.env.BASE_URL || "http://localhost:5173";
+  console.log(`🌐 Base URL: ${baseUrl}`);
+
   const browser: Browser = await chromium.launch();
   const page: Page = await browser.newPage();
+
+  // Validar se o servidor está acessível
+  try {
+    console.log(`🔌 Verificando conexão com ${baseUrl}...`);
+    await page.goto(baseUrl, { timeout: 5000 });
+    console.log(`✅ Servidor acessível!\n`);
+  } catch (error) {
+    console.error(
+      `❌ ERRO: Não foi possível conectar ao servidor em ${baseUrl}`,
+    );
+    console.error(`\nCertifique-se de que:`);
+    console.error(`  1. O servidor está rodando (pnpm -F @finmath/ui dev)`);
+    console.error(`  2. A porta está correta`);
+    console.error(`  3. Use BASE_URL=<url> se a porta for diferente de 5173`);
+    console.error(`\nExemplo:`);
+    console.error(`  BASE_URL=http://localhost:5174 pnpm test:a11y:report\n`);
+    await browser.close();
+    process.exit(1);
+  }
 
   const urls = [
     { path: "/", name: "Home" },
@@ -32,7 +55,7 @@ async function generateA11yReport() {
   for (const { path: urlPath, name } of urls) {
     console.log(`🔍 Auditando: ${name} (${urlPath})`);
 
-    await page.goto(`http://localhost:5173${urlPath}`);
+    await page.goto(`${baseUrl}${urlPath}`);
 
     const accessibilityResults = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
