@@ -32,7 +32,7 @@ async function generateA11yReport() {
 
     await page.goto(`http://localhost:5173${urlPath}`);
 
-    const accessibilityResults = await new AxeBuilder({ page })
+    const accessibilityResults = await new AxeBuilder(page)
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
       .analyze();
 
