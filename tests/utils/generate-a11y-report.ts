@@ -17,7 +17,8 @@ interface A11yResult {
  */
 async function generateA11yReport() {
   const browser: Browser = await chromium.launch();
-  const page: Page = await browser.newPage();
+  const context = await browser.newContext();
+  const page: Page = await context.newPage();
 
   const urls = [
     { path: "/", name: "Home" },
@@ -52,6 +53,7 @@ async function generateA11yReport() {
     console.log(`  ❓ Incomplete: ${accessibilityResults.incomplete.length}`);
   }
 
+  await context.close();
   await browser.close();
 
   // Salvar resultados
