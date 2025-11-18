@@ -1,0 +1,20 @@
+{
+  "test_id": "SAC_002",
+  "stage": "S2",
+  "description": "R$ 5000.00, 6x, 3.00% a.m. — SAC",
+  "inputs": {
+    "pv": "5000.00",
+    "rateMonthly": "0.03",
+    "n": 6,
+    "date0": "2025-01-10",
+    "date1": "2025-02-10",
+    "daycount": "30360",
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "amort_constante": 833.33,
+    "total_interest": 525.0,
+    "total_paid": 5525.0
+  },
+  "tolerance": 0.01
+}

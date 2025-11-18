@@ -1,0 +1,20 @@
+{
+  "test_id": "SAC_003",
+  "stage": "S2",
+  "description": "R$ 20000.00, 24x, 1.800% a.m. — SAC",
+  "inputs": {
+    "pv": "20000.00",
+    "rateMonthly": "0.018",
+    "n": 24,
+    "date0": "2025-01-10",
+    "date1": "2025-02-10",
+    "daycount": "30360",
+    "motorVersion": "0.1.0"
+  },
+  "expected": {
+    "amort_constante": 833.33,
+    "total_interest": 4500.0,
+    "total_paid": 24500.0
+  },
+  "tolerance": 0.01
+}
