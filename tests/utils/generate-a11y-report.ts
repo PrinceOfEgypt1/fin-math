@@ -21,7 +21,8 @@ async function generateA11yReport() {
   console.log(`🌐 Base URL: ${baseUrl}`);
 
   const browser: Browser = await chromium.launch();
-  const page: Page = await browser.newPage();
+  const context = await browser.newContext();
+  const page: Page = await context.newPage();
 
   // Validar se o servidor está acessível
   try {
@@ -38,6 +39,7 @@ async function generateA11yReport() {
     console.error(`  3. Use BASE_URL=<url> se a porta for diferente de 5173`);
     console.error(`\nExemplo:`);
     console.error(`  BASE_URL=http://localhost:5174 pnpm test:a11y:report\n`);
+    await context.close();
     await browser.close();
     process.exit(1);
   }
@@ -75,6 +77,7 @@ async function generateA11yReport() {
     console.log(`  ❓ Incomplete: ${accessibilityResults.incomplete.length}`);
   }
 
+  await context.close();
   await browser.close();
 
   // Salvar resultados
